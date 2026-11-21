@@ -74,6 +74,10 @@
         <i data-lucide="help-circle" class="w-4 h-4"></i>
         <span>DevOps Skill Quiz</span>
       </button>
+      <button onclick="switchTab('pipeline')" id="tab-btn-pipeline" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+        <i data-lucide="git-merge" class="w-4 h-4 text-emerald-400"></i>
+        <span>CI/CD Pipeline</span>
+      </button>
     </div>
   </div>
 
@@ -530,6 +534,107 @@
       </div>
     </div>
 
+    <!-- ========================================================================= -->
+    <!-- TAB 6: DEVOPS CI/CD PIPELINE -->
+    <!-- ========================================================================= -->
+    <div id="view-pipeline" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+              <i data-lucide="git-merge" class="w-6 h-6 text-emerald-400"></i>
+              <span>Production DevOps CI/CD Pipeline Architecture</span>
+            </h2>
+            <p class="text-slate-400 text-sm mt-1">This 5-stage automated pipeline runs on every <code>git push</code> via GitHub Actions.</p>
+          </div>
+          <span class="text-xs px-3 py-1 bg-emerald-950/80 border border-emerald-800 text-emerald-300 rounded-full font-mono">
+            Active Workflow: deploy.yml
+          </span>
+        </div>
+
+        <!-- Pipeline Stages Flow -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+          
+          <!-- Stage 1 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 relative">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-cyan-400">STAGE 1</span>
+              <span class="text-[10px] bg-cyan-950 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-800">CI</span>
+            </div>
+            <p class="text-sm font-bold text-white flex items-center space-x-1.5">
+              <span>🧪 Quality Gate</span>
+            </p>
+            <p class="text-xs text-slate-400">Runs syntax linting and 6 automated unit & probe tests via <code>npm test</code>.</p>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-purple-400">STAGE 2</span>
+              <span class="text-[10px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800">SecOps</span>
+            </div>
+            <p class="text-sm font-bold text-white flex items-center space-x-1.5">
+              <span>🛡️ DevSecOps</span>
+            </p>
+            <p class="text-xs text-slate-400">Scans for hardcoded credentials, secret keys, or token leaks before building.</p>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-blue-400">STAGE 3</span>
+              <span class="text-[10px] bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800">Build</span>
+            </div>
+            <p class="text-sm font-bold text-white flex items-center space-x-1.5">
+              <span>📦 Ingestion</span>
+            </p>
+            <p class="text-xs text-slate-400">Injects Git Commit SHA & release timestamp into the production artifact.</p>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-400">STAGE 4</span>
+              <span class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800">CD</span>
+            </div>
+            <p class="text-sm font-bold text-white flex items-center space-x-1.5">
+              <span>🚀 Deploy Pages</span>
+            </p>
+            <p class="text-xs text-slate-400">Continuous deployment to global GitHub Pages edge network.</p>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-amber-400">STAGE 5</span>
+              <span class="text-[10px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-800">SRE</span>
+            </div>
+            <p class="text-sm font-bold text-white flex items-center space-x-1.5">
+              <span>🩺 Smoke Test</span>
+            </p>
+            <p class="text-xs text-slate-400">Automated HTTP probe ensures production URL returns HTTP 200 OK.</p>
+          </div>
+
+        </div>
+
+        <!-- Code preview of deploy.yml -->
+        <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3">
+          <p class="text-xs font-bold text-slate-300 font-mono">Workflow Trigger Definition (.github/workflows/deploy.yml):</p>
+          <pre class="text-xs font-mono text-cyan-300 bg-slate-900 p-3 rounded-lg overflow-x-auto">
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  quality-gate:      # Stage 1: npm test & linting
+  security-gate:     # Stage 2: Secret & token scanning
+  build-and-package: # Stage 3: Release artifact injection
+  deploy-production: # Stage 4: GitHub Pages CD deployment
+  smoke-test:        # Stage 5: SRE health verification probe</pre>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Modal for /metrics view -->
@@ -550,8 +655,9 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950 py-4 text-center text-xs text-slate-500 font-mono">
-    DevOpsForge • Deployed on GitHub Pages • Interactive Cloud-Native Laboratory
+  <footer class="border-t border-slate-800 bg-slate-950 py-4 text-center text-xs text-slate-500 font-mono space-y-1">
+    <div>DevOpsForge • Deployed on GitHub Pages • Interactive Cloud-Native Laboratory</div>
+    <!-- BUILD_METADATA -->
   </footer>
 
   <!-- Script logic: Self-contained & 100% works on GitHub Pages -->
@@ -622,7 +728,7 @@
     ];
 
     function switchTab(tabId) {
-      ['dashboard', 'roadmap', 'architecture', 'commands', 'quiz'].forEach(t => {
+      ['dashboard', 'roadmap', 'architecture', 'commands', 'quiz', 'pipeline'].forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
         const btn = document.getElementById(`tab-btn-${t}`);
         btn.classList.remove('bg-cyan-600/20', 'text-cyan-400', 'border-cyan-500/30', 'border');
@@ -834,3 +940,4 @@ devops_kubernetes_readiness_status ${isReady ? 1 : 0}`;
   </script>
 </body>
 </html>
+

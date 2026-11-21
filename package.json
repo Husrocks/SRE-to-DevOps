@@ -1,0 +1,12 @@
+{
+  "name": "devopsforge-github",
+  "version": "1.0.0",
+  "description": "DevOpsForge - Cloud-Native Learning Lab deployed via GitHub Actions CI/CD",
+  "scripts": {
+    "test": "node --test tests/validate.test.js",
+    "lint": "node -e \"const fs=require('fs'); const html=fs.readFileSync('index.html','utf8'); if(!html.includes('<!DOCTYPE html>')) throw new Error('Missing DOCTYPE'); console.log('✅ HTML Lint check passed!');\""
+  },
+  "keywords": ["devops", "ci-cd", "github-actions", "github-pages", "testing", "devsecops"],
+  "author": "DevOps Learner",
+  "license": "MIT"
+}
