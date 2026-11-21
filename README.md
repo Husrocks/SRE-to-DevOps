@@ -1,105 +1,58 @@
-# 🛠️ DevOpsForge: Interactive Hands-On DevOps Laboratory
+# 🚀 DevOpsForge: Interactive DevOps Learning Lab
 
-Welcome to **DevOpsForge**! A complete, interactive learning platform and cloud-native project designed to teach you modern DevOps, Docker, Kubernetes, CI/CD, Prometheus observability, and Terraform.
-
-![DevOpsForge Status](https://img.shields.io/badge/DevOps-Learning%20Lab-06b6d4?style=for-the-badge)
-![Docker Ready](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=for-the-badge&logo=docker)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-Ready-326CE5?style=for-the-badge&logo=kubernetes)
-![Prometheus](https://img.shields.io/badge/Prometheus-Metrics-E6522C?style=for-the-badge&logo=prometheus)
+An interactive web application designed to help you learn DevOps, Kubernetes probes, Prometheus metrics, and Chaos Engineering directly in your browser, deployed 100% on **GitHub Pages**!
 
 ---
 
-## ⚡ Quick Start (Run in 10 seconds)
+## ⚡ How to Deploy to GitHub (3 Simple Steps)
 
-### Option 1: Native Node.js Run
+### Step 1: Create a New Repository on GitHub
+1. Open [GitHub.com](https://github.com) and click **"New"** to create a repository (e.g. `devopsforge`).
+2. Make it **Public** (required for free GitHub Pages).
+
+### Step 2: Push This Project to GitHub
+In your terminal, run:
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run unit tests
-npm test
-
-# 3. Start the application
-npm start
-```
-Then open your browser to **[http://localhost:3000](http://localhost:3000)**.
-
----
-
-### Option 2: Docker Container Run
-```bash
-# Build the optimized multi-stage production image
-docker build -t devops-forge:latest .
-
-# Run the container with port forwarding
-docker run -d -p 3000:3000 --name devops-lab devops-forge:latest
-
-# Check container health and logs
-docker ps
-docker logs devops-lab
+git add .
+git commit -m "feat: setup clean github deployment"
+git branch -M main
+git remote add origin https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git
+git push -u origin main
 ```
 
----
-
-### Option 3: Full Multi-Service Docker Compose Stack
-Orchestrates the Web App, Redis Cache, PostgreSQL Database, Prometheus, and Nginx Reverse Proxy:
-```bash
-docker-compose up -d --build
-```
-- Web Application via Nginx: `http://localhost`
-- Direct Web App: `http://localhost:3000`
-- Prometheus Dashboard: `http://localhost:9090`
+### Step 3: Enable GitHub Pages
+1. Go to your repository on GitHub.
+2. Click **Settings** (tab at the top) → **Pages** (in the left sidebar).
+3. Under **Build and deployment** → **Source**, select:
+   👉 **GitHub Actions**
+4. That's it! GitHub Actions will automatically run the workflow in `.github/workflows/deploy.yml` and give you your live URL:
+   `https://<YOUR-USERNAME>.github.io/<YOUR-REPO-NAME>/`
 
 ---
 
-## 📂 Repository Layout
+## 🧪 What You Can Learn & Experiment With in This App
+
+* **Live Telemetry & Golden Signals**: View live uptime, simulated memory utilization, and real-time HTTP traces.
+* **Chaos Engineering Simulator**:
+  * **Fail Liveness Probe**: Simulates a 500 crash on `/health/live` (how Kubernetes detects dead containers).
+  * **Fail Readiness Probe**: Simulates a 503 drain on `/health/ready` (how load balancers stop sending traffic).
+  * **Inject Latency**: Drag the slider from 0ms to 2500ms to see request latency spikes.
+  * **Spike CPU**: Simulate high load to see resource saturation.
+* **Prometheus Metrics**: Click the **`/metrics`** button in the header to view live Prometheus telemetry format.
+* **DevOps Roadmap**: 7 structured milestones covering Linux, Git, Docker, CI/CD, Kubernetes, Observability, and Terraform.
+* **Cheat Sheets**: Essential copy-and-paste commands for Docker, Kubernetes, and Git.
+* **DevOps Quiz**: Test your knowledge with instant scoring.
+
+---
+
+## 📁 Repository Structure
 
 ```
 .
-├── server.js               # Cloud-native Express app with Prometheus metrics & K8s probes
-├── public/
-│   └── index.html          # Interactive Mission Control, Chaos Lab, Quiz & Roadmaps
-├── tests/
-│   └── server.test.js      # Automated CI test suite (Node native test runner)
-├── Dockerfile              # Production multi-stage Alpine build with non-root user
-├── Dockerfile.dev          # Local dev build with hot reload
-├── docker-compose.yml      # Orchestrates App, Redis, PostgreSQL, Prometheus & Nginx
-├── nginx/
-│   └── nginx.conf          # Reverse proxy, rate limiting, and security headers
-├── prometheus/
-│   └── prometheus.yml      # Observability scraping configuration
-├── k8s/                    # Kubernetes production manifests
-│   ├── 01-namespace.yaml
-│   ├── 02-configmap.yaml
-│   ├── 03-secrets.yaml
-│   ├── 04-deployment.yaml  # Replicas, liveness/readiness probes, resource limits
-│   ├── 05-service.yaml     # Internal cluster routing
-│   ├── 06-hpa.yaml         # Horizontal Pod Autoscaler (2 to 10 replicas)
-│   └── 07-ingress.yaml     # Ingress controller routing
-├── terraform/              # Infrastructure as Code (IaC)
-│   ├── main.tf             # AWS VPC, Subnets, and Security Groups
-│   ├── variables.tf
-│   └── outputs.tf
-├── .github/workflows/
-│   └── ci-cd.yml           # Automated CI/CD pipeline with Trivy security scans
-└── DEVOPS_ROADMAP.md       # Complete 7-Stage Beginner-to-Pro Learning Guide
+├── index.html                  # Single-file interactive DevOps lab & learning website
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # Automated GitHub Actions deployment workflow
+├── DEVOPS_ROADMAP.md           # Master 7-stage learning guide
+└── README.md                   # Deployment instructions
 ```
-
----
-
-## 🔬 Interactive Features in the Web App
-1. **Live Mission Control**: Real-time memory utilization, uptime, and request logging.
-2. **Chaos Engineering & Fault Injection**:
-   - Toggle **Kubernetes Liveness Probe failure** (`/health/live` returns 500).
-   - Toggle **Kubernetes Readiness Probe failure** (`/health/ready` returns 503).
-   - Inject artificial **latency delays** (0ms to 2500ms).
-   - Trigger **CPU load spikes** and simulated 500 error traces.
-3. **Architecture Visualizer**: Interactive flow diagram mapping requests from client to Nginx, K8s, pods, and Prometheus.
-4. **Interactive DevOps Quiz**: Instant testing of core DevOps concepts.
-5. **Cheat Sheets**: Ready-to-copy commands for Docker, Docker Compose, Kubernetes, and Terraform.
-
----
-
-## 📖 Complete Study Guide
-Read [`DEVOPS_ROADMAP.md`](file:///e:/doce/DEVOPS_ROADMAP.md) for detailed explanations of every stage.
-

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DevOpsForge - Interactive DevOps Learning Lab & Mission Control</title>
+  <title>DevOpsForge - Interactive DevOps Learning Lab</title>
   <!-- Tailwind CSS & Lucide Icons via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -25,7 +25,7 @@
         </div>
         <div>
           <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-            DevOpsForge <span class="text-cyan-400 text-xs px-2 py-0.5 rounded-full border border-cyan-500/30 bg-cyan-950/60 font-mono">v1.0.0</span>
+            DevOpsForge <span class="text-cyan-400 text-xs px-2 py-0.5 rounded-full border border-cyan-500/30 bg-cyan-950/60 font-mono">GitHub Edition</span>
           </h1>
           <p class="text-xs text-slate-400">Interactive Cloud-Native Laboratory & Learning System</p>
         </div>
@@ -36,17 +36,17 @@
         <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
           <span class="w-2.5 h-2.5 rounded-full" id="live-indicator-dot"></span>
           <span class="text-slate-300">Liveness:</span>
-          <span id="live-indicator-text" class="font-bold">CHECKING...</span>
+          <span id="live-indicator-text" class="font-bold">HEALTHY (200)</span>
         </div>
         <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
           <span class="w-2.5 h-2.5 rounded-full" id="ready-indicator-dot"></span>
           <span class="text-slate-300">Readiness:</span>
-          <span id="ready-indicator-text" class="font-bold">CHECKING...</span>
+          <span id="ready-indicator-text" class="font-bold">READY (200)</span>
         </div>
-        <a href="/metrics" target="_blank" class="flex items-center space-x-1.5 bg-cyan-950/80 text-cyan-400 border border-cyan-800 px-3 py-1.5 rounded-lg hover:bg-cyan-900 transition">
+        <button onclick="viewPrometheusMetrics()" class="flex items-center space-x-1.5 bg-cyan-950/80 text-cyan-400 border border-cyan-800 px-3 py-1.5 rounded-lg hover:bg-cyan-900 transition">
           <i data-lucide="activity" class="w-3.5 h-3.5"></i>
           <span>/metrics</span>
-        </a>
+        </button>
       </div>
     </div>
   </header>
@@ -91,9 +91,9 @@
           <i data-lucide="sparkles" class="w-6 h-6"></i>
         </div>
         <div>
-          <h2 class="text-base font-bold text-white">Welcome to your real running DevOps Playground!</h2>
+          <h2 class="text-base font-bold text-white">Live DevOps Learning Lab on GitHub</h2>
           <p class="text-sm text-slate-300 mt-1 leading-relaxed">
-            This dashboard is connected to a live production-ready Node.js container application with real Prometheus metrics, Kubernetes probes, and chaos engineering tools. Test how microservices behave when things fail, inspect metrics, and use the project files to master Docker, K8s, CI/CD, and Terraform!
+            This dashboard simulates Kubernetes probes, Prometheus metrics, and Chaos Engineering directly in your browser. Test how microservices behave when things fail, explore the curriculum, and inspect the real commands used by SRE and DevOps engineers!
           </p>
         </div>
       </div>
@@ -106,16 +106,16 @@
             <i data-lucide="clock" class="w-4 h-4 text-cyan-400"></i>
           </div>
           <div class="text-2xl font-bold font-mono text-white" id="stat-uptime">0s</div>
-          <p class="text-xs text-slate-500 mt-1">Live process running time</p>
+          <p class="text-xs text-slate-500 mt-1">Live session duration</p>
         </div>
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
-            <span>MEMORY UTILIZATION</span>
+            <span>SIMULATED MEMORY</span>
             <i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i>
           </div>
-          <div class="text-2xl font-bold font-mono text-white" id="stat-memory">0%</div>
-          <p class="text-xs text-slate-500 mt-1" id="stat-memory-detail">0 MB / 0 MB</p>
+          <div class="text-2xl font-bold font-mono text-white" id="stat-memory">42%</div>
+          <p class="text-xs text-slate-500 mt-1" id="stat-memory-detail">428 MB / 1024 MB</p>
         </div>
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
@@ -124,16 +124,16 @@
             <i data-lucide="timer" class="w-4 h-4 text-amber-400"></i>
           </div>
           <div class="text-2xl font-bold font-mono text-white" id="stat-latency">0 ms</div>
-          <p class="text-xs text-slate-500 mt-1">Simulated network/DB delay</p>
+          <p class="text-xs text-slate-500 mt-1">Simulated network delay</p>
         </div>
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
-            <span>HOST / POD NAME</span>
+            <span>ENVIRONMENT</span>
             <i data-lucide="server" class="w-4 h-4 text-emerald-400"></i>
           </div>
-          <div class="text-sm font-bold font-mono text-emerald-400 truncate" id="stat-hostname">-</div>
-          <p class="text-xs text-slate-500 mt-1 font-mono" id="stat-platform">-</p>
+          <div class="text-sm font-bold font-mono text-emerald-400 truncate">GitHub Pages</div>
+          <p class="text-xs text-slate-500 mt-1 font-mono">Edge CDN Hosted</p>
         </div>
       </div>
 
@@ -148,9 +148,9 @@
                 <i data-lucide="flame" class="w-5 h-5 text-rose-500"></i>
                 <span>Chaos & Fault Injection Lab</span>
               </h3>
-              <p class="text-xs text-slate-400 mt-0.5">Test how SRE monitors & Kubernetes self-healing react to real disasters</p>
+              <p class="text-xs text-slate-400 mt-0.5">Test how SRE monitors & Kubernetes self-healing react to failures</p>
             </div>
-            <span class="text-xs px-2.5 py-1 bg-rose-950/60 border border-rose-800 text-rose-400 rounded-md font-mono">SRE Sim</span>
+            <span class="text-xs px-2.5 py-1 bg-rose-950/60 border border-rose-800 text-rose-400 rounded-md font-mono">SRE Lab</span>
           </div>
 
           <div class="space-y-4">
@@ -158,10 +158,10 @@
             <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between">
               <div>
                 <p class="text-sm font-semibold text-white">Fail Kubernetes Liveness Probe</p>
-                <p class="text-xs text-slate-400">Returns HTTP 500 on <code>/health/live</code>. Kubernetes will restart this pod.</p>
+                <p class="text-xs text-slate-400">Simulates 500 error on <code>/health/live</code>. Kubernetes will restart the pod.</p>
               </div>
-              <button onclick="triggerChaos('toggle_health')" id="btn-toggle-health" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition">
-                Toggle Unhealthy
+              <button onclick="toggleLiveness()" id="btn-toggle-health" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition">
+                Simulate Liveness Crash
               </button>
             </div>
 
@@ -169,10 +169,10 @@
             <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between">
               <div>
                 <p class="text-sm font-semibold text-white">Fail Kubernetes Readiness Probe</p>
-                <p class="text-xs text-slate-400">Returns HTTP 503 on <code>/health/ready</code>. Load balancer stops sending traffic.</p>
+                <p class="text-xs text-slate-400">Simulates 503 error on <code>/health/ready</code>. Load balancer stops routing traffic.</p>
               </div>
-              <button onclick="triggerChaos('toggle_ready')" id="btn-toggle-ready" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition">
-                Toggle Unready
+              <button onclick="toggleReadiness()" id="btn-toggle-ready" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition">
+                Simulate Readiness Drain
               </button>
             </div>
 
@@ -180,23 +180,23 @@
             <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl space-y-3">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-sm font-semibold text-white">Inject Network / Database Latency</p>
+                  <p class="text-sm font-semibold text-white">Inject Network Latency</p>
                   <p class="text-xs text-slate-400">Simulate slow downstream API or database bottleneck</p>
                 </div>
                 <span class="text-xs font-mono text-cyan-400" id="latency-label">0 ms</span>
               </div>
               <div class="flex items-center space-x-2">
-                <input type="range" min="0" max="2500" step="250" value="0" id="latency-slider" class="w-full accent-cyan-500 cursor-pointer" onchange="setLatency(this.value)">
+                <input type="range" min="0" max="2500" step="250" value="0" id="latency-slider" class="w-full accent-cyan-500 cursor-pointer" oninput="setLatency(this.value)">
               </div>
             </div>
 
             <!-- Chaos Item 4 -->
             <div class="grid grid-cols-2 gap-3 pt-2">
-              <button onclick="triggerChaos('simulate_error')" class="p-3 bg-red-950/40 border border-red-800/60 hover:bg-red-900/60 text-red-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
+              <button onclick="simulate500Error()" class="p-3 bg-red-950/40 border border-red-800/60 hover:bg-red-900/60 text-red-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
                 <i data-lucide="alert-octagon" class="w-4 h-4 text-red-400"></i>
                 <span>Simulate 500 Error</span>
               </button>
-              <button onclick="triggerChaos('cpu_spike')" class="p-3 bg-purple-950/40 border border-purple-800/60 hover:bg-purple-900/60 text-purple-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
+              <button onclick="simulateCpuSpike()" class="p-3 bg-purple-950/40 border border-purple-800/60 hover:bg-purple-900/60 text-purple-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
                 <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
                 <span>Spike CPU Load</span>
               </button>
@@ -213,9 +213,9 @@
                   <i data-lucide="radio" class="w-5 h-5 text-cyan-400"></i>
                   <span>Live HTTP Traffic & Golden Signals</span>
                 </h3>
-                <p class="text-xs text-slate-400 mt-0.5">Real-time HTTP request trace log processed by prom-client</p>
+                <p class="text-xs text-slate-400 mt-0.5">Real-time HTTP request trace stream</p>
               </div>
-              <button onclick="sendSampleTraffic()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold rounded-lg flex items-center space-x-1 transition shadow">
+              <button onclick="sendPing()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold rounded-lg flex items-center space-x-1 transition shadow">
                 <i data-lucide="send" class="w-3.5 h-3.5"></i>
                 <span>Send Ping</span>
               </button>
@@ -223,13 +223,13 @@
 
             <!-- Traffic Log List -->
             <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 h-64 overflow-y-auto space-y-2 font-mono text-xs" id="request-stream">
-              <div class="text-slate-500 text-center py-8">Listening for incoming requests...</div>
+              <!-- Logs populated by JS -->
             </div>
           </div>
 
           <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-mono">
             <span>Golden Signals: Latency, Traffic, Errors, Saturation</span>
-            <span class="text-cyan-400">Auto-refreshing (2s)</span>
+            <span class="text-cyan-400">Active Monitoring</span>
           </div>
         </div>
       </div>
@@ -259,7 +259,7 @@
             <i data-lucide="layers" class="w-6 h-6 text-cyan-400"></i>
             <span>Production DevOps Architecture Diagram</span>
           </h2>
-          <p class="text-slate-400 text-sm mt-1">How requests, containers, orchestration, and monitoring interact in this project.</p>
+          <p class="text-slate-400 text-sm mt-1">How requests, containers, orchestration, and monitoring interact in cloud systems.</p>
         </div>
 
         <!-- Visual Flow Diagram -->
@@ -292,7 +292,7 @@
               <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-950 flex items-center justify-center text-indigo-400">
                 <i data-lucide="boxes" class="w-5 h-5"></i>
               </div>
-              <p class="text-xs text-slate-300 font-semibold">Kubernetes / Compose</p>
+              <p class="text-xs text-slate-300 font-semibold">Kubernetes Pods</p>
               <p class="text-[10px] text-slate-500">Service & Pod Replicas</p>
             </div>
 
@@ -302,8 +302,8 @@
               <div class="w-10 h-10 mx-auto rounded-lg bg-emerald-950 flex items-center justify-center text-emerald-400">
                 <i data-lucide="server" class="w-5 h-5"></i>
               </div>
-              <p class="text-xs text-slate-300 font-semibold">DevOpsForge App</p>
-              <p class="text-[10px] text-slate-500">Port 3000 (Express/Prometheus)</p>
+              <p class="text-xs text-slate-300 font-semibold">Microservices App</p>
+              <p class="text-[10px] text-slate-500">Handles business logic</p>
             </div>
 
             <!-- Step 5 -->
@@ -313,40 +313,9 @@
                 <i data-lucide="activity" class="w-5 h-5"></i>
               </div>
               <p class="text-xs text-slate-300 font-semibold">Prometheus & Grafana</p>
-              <p class="text-[10px] text-slate-500">Scrapes /metrics every 15s</p>
+              <p class="text-[10px] text-slate-500">Scrapes /metrics</p>
             </div>
 
-          </div>
-
-          <!-- Explanation of files -->
-          <div class="border-t border-slate-800 pt-5">
-            <h4 class="text-sm font-bold text-white mb-3">Project File Mapping to Architecture:</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs font-mono">
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-cyan-400 font-bold block mb-1">Dockerfile</span>
-                <span class="text-slate-400">Multi-stage alpine build packaging the app with non-root security.</span>
-              </div>
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-blue-400 font-bold block mb-1">docker-compose.yml</span>
-                <span class="text-slate-400">Connects App + Redis + PostgreSQL + Prometheus + Nginx into one network.</span>
-              </div>
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-purple-400 font-bold block mb-1">k8s/*.yaml</span>
-                <span class="text-slate-400">Deployment, Service, ConfigMap, Secrets, Ingress, and Autoscaler (HPA).</span>
-              </div>
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-emerald-400 font-bold block mb-1">.github/workflows/</span>
-                <span class="text-slate-400">CI/CD pipeline: Test -> Lint -> Docker Build & Push -> Security Scan.</span>
-              </div>
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-amber-400 font-bold block mb-1">terraform/*.tf</span>
-                <span class="text-slate-400">Infrastructure as Code: provisions Cloud VPC, Subnets, and Cluster resources.</span>
-              </div>
-              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-rose-400 font-bold block mb-1">nginx/nginx.conf</span>
-                <span class="text-slate-400">Production reverse-proxy with rate-limiting, SSL, and gzip compression.</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -362,57 +331,57 @@
             <i data-lucide="terminal" class="w-6 h-6 text-cyan-400"></i>
             <span>Essential DevOps Commands Reference</span>
           </h2>
-          <p class="text-slate-400 text-sm mt-1">Copy and execute these in your terminal right in this workspace!</p>
+          <p class="text-slate-400 text-sm mt-1">Copy and use these commands when practicing Docker, K8s, and Git!</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Command Group 1: Docker -->
+          <!-- Command Group 1: Git & GitHub -->
           <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-sm font-bold text-cyan-400 flex items-center space-x-2">
-                <i data-lucide="box" class="w-4 h-4"></i>
-                <span>Docker Commands</span>
+                <i data-lucide="git-branch" class="w-4 h-4"></i>
+                <span>Git & GitHub Workflow</span>
               </span>
-              <span class="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">Containers</span>
+              <span class="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">Version Control</span>
             </div>
             <div class="space-y-2 text-xs font-mono">
-              <div class="p-2.5 bg-slate-900 rounded border border-slate-800 group relative">
-                <p class="text-slate-400 text-[11px] mb-1">Build Docker image with tag:</p>
-                <code class="text-white">docker build -t devops-forge:latest .</code>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Check status and staged files:</p>
+                <code class="text-white">git status</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Run container in background with port mapping:</p>
-                <code class="text-white">docker run -d -p 3000:3000 --name devops-app devops-forge:latest</code>
+                <p class="text-slate-400 text-[11px] mb-1">Commit changes with Conventional Commit format:</p>
+                <code class="text-white">git commit -m "feat: add chaos simulator"</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Inspect live logs & resource stats:</p>
-                <code class="text-white">docker logs -f devops-app</code><br>
-                <code class="text-white">docker stats</code>
+                <p class="text-slate-400 text-[11px] mb-1">Push to GitHub main branch:</p>
+                <code class="text-white">git push origin main</code>
               </div>
             </div>
           </div>
 
-          <!-- Command Group 2: Docker Compose -->
+          <!-- Command Group 2: Docker -->
           <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-sm font-bold text-blue-400 flex items-center space-x-2">
-                <i data-lucide="layers" class="w-4 h-4"></i>
-                <span>Docker Compose</span>
+                <i data-lucide="box" class="w-4 h-4"></i>
+                <span>Docker Container Commands</span>
               </span>
-              <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800">Multi-Service</span>
+              <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800">Containers</span>
             </div>
             <div class="space-y-2 text-xs font-mono">
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Start all services in detached mode:</p>
-                <code class="text-white">docker-compose up -d --build</code>
+                <p class="text-slate-400 text-[11px] mb-1">Build Docker image with tag:</p>
+                <code class="text-white">docker build -t myapp:1.0 .</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Check status of running stack:</p>
-                <code class="text-white">docker-compose ps</code>
+                <p class="text-slate-400 text-[11px] mb-1">Run container in background with port mapping:</p>
+                <code class="text-white">docker run -d -p 8080:80 myapp:1.0</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Stop and clean up containers & networks:</p>
-                <code class="text-white">docker-compose down -v</code>
+                <p class="text-slate-400 text-[11px] mb-1">View running containers and live logs:</p>
+                <code class="text-white">docker ps</code><br>
+                <code class="text-white">docker logs -f &lt;container-id&gt;</code>
               </div>
             </div>
           </div>
@@ -428,41 +397,41 @@
             </div>
             <div class="space-y-2 text-xs font-mono">
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Apply all manifests in order:</p>
+                <p class="text-slate-400 text-[11px] mb-1">Apply all manifests in folder:</p>
                 <code class="text-white">kubectl apply -f k8s/</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">View pods, services & HPA:</p>
-                <code class="text-white">kubectl get pods,svc,hpa -n devops-lab</code>
+                <p class="text-slate-400 text-[11px] mb-1">View pods, services & autoscalers:</p>
+                <code class="text-white">kubectl get pods,svc,hpa</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Debug a pod or view restart reasons:</p>
-                <code class="text-white">kubectl describe pod &lt;pod-name&gt; -n devops-lab</code>
+                <p class="text-slate-400 text-[11px] mb-1">Describe a pod to inspect restart reasons:</p>
+                <code class="text-white">kubectl describe pod &lt;pod-name&gt;</code>
               </div>
             </div>
           </div>
 
-          <!-- Command Group 4: Terraform -->
+          <!-- Command Group 4: CI/CD & GitHub Actions -->
           <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-sm font-bold text-purple-400 flex items-center space-x-2">
-                <i data-lucide="cloud" class="w-4 h-4"></i>
-                <span>Terraform (IaC)</span>
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <span>GitHub Actions CI/CD</span>
               </span>
-              <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800">IaC</span>
+              <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800">CI/CD</span>
             </div>
             <div class="space-y-2 text-xs font-mono">
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Initialize plugins & backend:</p>
-                <code class="text-white">cd terraform &amp;&amp; terraform init</code>
+                <p class="text-slate-400 text-[11px] mb-1">Workflow triggers:</p>
+                <code class="text-white">on: [push, pull_request]</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Preview changes before applying:</p>
-                <code class="text-white">terraform plan</code>
+                <p class="text-slate-400 text-[11px] mb-1">Workflow file location:</p>
+                <code class="text-white">.github/workflows/*.yml</code>
               </div>
               <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
-                <p class="text-slate-400 text-[11px] mb-1">Apply infrastructure:</p>
-                <code class="text-white">terraform apply -auto-approve</code>
+                <p class="text-slate-400 text-[11px] mb-1">Auto deploy to Pages:</p>
+                <code class="text-white">uses: actions/deploy-pages@v4</code>
               </div>
             </div>
           </div>
@@ -563,15 +532,94 @@
 
   </main>
 
+  <!-- Modal for /metrics view -->
+  <div id="metrics-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white font-mono flex items-center space-x-2">
+          <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+          <span>Prometheus /metrics Telemetry Output</span>
+        </h3>
+        <button onclick="closePrometheusModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+      <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-cyan-300 h-80 overflow-y-auto" id="prometheus-text"></pre>
+      <div class="text-right">
+        <button onclick="closePrometheusModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg text-white">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="border-t border-slate-800 bg-slate-950 py-4 text-center text-xs text-slate-500 font-mono">
-    DevOpsForge • Hands-on Cloud-Native Laboratory • Ready for Docker, Kubernetes, Prometheus & CI/CD
+    DevOpsForge • Deployed on GitHub Pages • Interactive Cloud-Native Laboratory
   </footer>
 
-  <!-- Script logic -->
+  <!-- Script logic: Self-contained & 100% works on GitHub Pages -->
   <script>
+    let isHealthy = true;
+    let isReady = true;
+    let latencyDelayMs = 0;
+    let totalRequests = 1;
+    let chaosErrors = 0;
+    let startTime = Date.now();
     let currentScore = 0;
     const answered = {};
+
+    const requestHistory = [
+      { timestamp: new Date().toLocaleTimeString(), method: 'GET', path: '/', status: 200, durationMs: 14 }
+    ];
+
+    const curriculumData = [
+      {
+        id: 'linux-git',
+        title: 'Stage 1: Linux & Git Foundation',
+        tag: 'Fundamentals',
+        description: 'Understand the terminal, file permissions, shell scripts, and Git branching workflows used by SREs and DevOps engineers.',
+        keyConcepts: ['SSH & Permissions (chmod, chown)', 'Process Management (ps, top, systemctl)', 'Git Flow vs Trunk-Based Development', 'SemVer Versioning']
+      },
+      {
+        id: 'docker',
+        title: 'Stage 2: Containerization (Docker)',
+        tag: 'Core Skill',
+        description: 'Package applications into portable, immutable container images with multi-stage builds, non-root users, and minimal layers.',
+        keyConcepts: ['Multi-Stage Dockerfiles', 'Docker Cache Optimization', 'Container Networking & Volumes', '.dockerignore best practices']
+      },
+      {
+        id: 'compose',
+        title: 'Stage 3: Multi-Container Apps (Docker Compose)',
+        tag: 'Local Orchestration',
+        description: 'Orchestrate microservices, reverse proxies (Nginx), and databases locally with declarative YAML configs.',
+        keyConcepts: ['Service dependencies (depends_on)', 'Named volumes & data persistence', 'Port forwarding vs internal networks', 'Environment file injection']
+      },
+      {
+        id: 'cicd',
+        title: 'Stage 4: CI/CD Pipelines (Automation)',
+        tag: 'Continuous Delivery',
+        description: 'Automate testing, linting, security scans, Docker builds, and deployment previews with GitHub Actions.',
+        keyConcepts: ['Continuous Integration (CI) test gates', 'Docker Buildx & Multi-Arch images', 'Trivy vulnerability scanning', 'Continuous Deployment (CD) workflows']
+      },
+      {
+        id: 'kubernetes',
+        title: 'Stage 5: Container Orchestration (Kubernetes)',
+        tag: 'Industry Standard',
+        description: 'Deploy, scale, and manage containerized workloads across a distributed cluster with self-healing and zero downtime.',
+        keyConcepts: ['Pods, Deployments & ReplicaSets', 'Services (ClusterIP, NodePort, LoadBalancer)', 'Liveness & Readiness Probes', 'ConfigMaps & Secrets', 'HPA (Horizontal Pod Autoscaler)']
+      },
+      {
+        id: 'observability',
+        title: 'Stage 6: Observability & Monitoring',
+        tag: 'Reliability',
+        description: 'Track the 4 Golden Signals (Latency, Traffic, Errors, Saturation) with Prometheus metrics and Grafana dashboards.',
+        keyConcepts: ['Metrics vs Logs vs Traces', 'Prometheus pull-model scraping', 'Setting alerts with Alertmanager', 'SLIs, SLOs, and SLAs']
+      },
+      {
+        id: 'iac',
+        title: 'Stage 7: Infrastructure as Code (Terraform)',
+        tag: 'Cloud Provisioning',
+        description: 'Provision cloud infrastructure (AWS/Azure/GCP) declaratively with state files, variables, and reusable modules.',
+        keyConcepts: ['Declarative vs Imperative', 'Terraform State & State Locking', 'Plan, Apply, and Destroy cycle', 'Infrastructure drift detection']
+      }
+    ];
 
     function switchTab(tabId) {
       ['dashboard', 'roadmap', 'architecture', 'commands', 'quiz'].forEach(t => {
@@ -589,131 +637,172 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    async function fetchSystemData() {
-      try {
-        const res = await fetch('/api/system');
-        const data = await res.json();
+    function updateTelemetryUI() {
+      const uptimeSec = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('stat-uptime').innerText = `${uptimeSec}s`;
+      document.getElementById('stat-latency').innerText = `${latencyDelayMs} ms`;
 
-        // Update stats
-        document.getElementById('stat-uptime').innerText = `${data.app.uptimeSeconds}s`;
-        document.getElementById('stat-memory').innerText = `${data.system.memoryPercent}%`;
-        document.getElementById('stat-memory-detail').innerText = `${data.system.memoryUsedMB} MB / ${data.system.memoryTotalMB} MB`;
-        document.getElementById('stat-latency').innerText = `${data.app.latencyDelayMs} ms`;
-        document.getElementById('stat-hostname').innerText = data.system.hostname;
-        document.getElementById('stat-platform').innerText = `${data.system.platform} (${data.system.cpus} CPUs)`;
+      // Liveness indicator
+      const liveDot = document.getElementById('live-indicator-dot');
+      const liveText = document.getElementById('live-indicator-text');
+      const btnToggleHealth = document.getElementById('btn-toggle-health');
 
-        // Liveness indicator
-        const liveDot = document.getElementById('live-indicator-dot');
-        const liveText = document.getElementById('live-indicator-text');
-        const btnToggleHealth = document.getElementById('btn-toggle-health');
-
-        if (data.app.isHealthy) {
-          liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
-          liveText.className = 'font-bold text-emerald-400';
-          liveText.innerText = 'HEALTHY (200)';
-          btnToggleHealth.innerText = 'Simulate Liveness Failure';
-          btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
-        } else {
-          liveDot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 badge-pulse';
-          liveText.className = 'font-bold text-rose-500';
-          liveText.innerText = 'FAIL (500)';
-          btnToggleHealth.innerText = 'Restore Liveness Health';
-          btnToggleHealth.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
-        }
-
-        // Readiness indicator
-        const readyDot = document.getElementById('ready-indicator-dot');
-        const readyText = document.getElementById('ready-indicator-text');
-        const btnToggleReady = document.getElementById('btn-toggle-ready');
-
-        if (data.app.isReady) {
-          readyDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
-          readyText.className = 'font-bold text-emerald-400';
-          readyText.innerText = 'READY (200)';
-          btnToggleReady.innerText = 'Simulate Readiness Failure';
-          btnToggleReady.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition';
-        } else {
-          readyDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 badge-pulse';
-          readyText.className = 'font-bold text-amber-500';
-          readyText.innerText = 'DRAINING (503)';
-          btnToggleReady.innerText = 'Restore Readiness State';
-          btnToggleReady.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
-        }
-
-        // Latency slider label
-        document.getElementById('latency-label').innerText = `${data.app.latencyDelayMs} ms`;
-
-        // Render request stream
-        const streamContainer = document.getElementById('request-stream');
-        if (data.recentRequests && data.recentRequests.length > 0) {
-          streamContainer.innerHTML = data.recentRequests.map(r => {
-            const statusColor = r.status >= 500 ? 'text-rose-400' : r.status >= 400 ? 'text-amber-400' : 'text-emerald-400';
-            return `
-              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800/80">
-                <div class="flex items-center space-x-2">
-                  <span class="text-slate-500">${r.timestamp}</span>
-                  <span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-400 font-bold">${r.method}</span>
-                  <span class="text-slate-300">${r.path}</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-slate-400">${r.durationMs}ms</span>
-                  <span class="font-bold ${statusColor}">${r.status}</span>
-                </div>
-              </div>
-            `;
-          }).join('');
-        }
-      } catch (e) {
-        console.error('Telemetry fetch failed', e);
+      if (isHealthy) {
+        liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+        liveText.className = 'font-bold text-emerald-400';
+        liveText.innerText = 'HEALTHY (200)';
+        btnToggleHealth.innerText = 'Simulate Liveness Crash';
+        btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
+      } else {
+        liveDot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 badge-pulse';
+        liveText.className = 'font-bold text-rose-500';
+        liveText.innerText = 'FAIL (500)';
+        btnToggleHealth.innerText = 'Restore Liveness Health';
+        btnToggleHealth.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
       }
-    }
 
-    async function triggerChaos(action, value = 0) {
-      await fetch('/api/chaos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, value })
-      });
-      fetchSystemData();
-    }
+      // Readiness indicator
+      const readyDot = document.getElementById('ready-indicator-dot');
+      const readyText = document.getElementById('ready-indicator-text');
+      const btnToggleReady = document.getElementById('btn-toggle-ready');
 
-    async function setLatency(val) {
-      document.getElementById('latency-label').innerText = `${val} ms`;
-      await triggerChaos('set_latency', val);
-    }
+      if (isReady) {
+        readyDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+        readyText.className = 'font-bold text-emerald-400';
+        readyText.innerText = 'READY (200)';
+        btnToggleReady.innerText = 'Simulate Readiness Drain';
+        btnToggleReady.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition';
+      } else {
+        readyDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 badge-pulse';
+        readyText.className = 'font-bold text-amber-500';
+        readyText.innerText = 'DRAINING (503)';
+        btnToggleReady.innerText = 'Restore Readiness State';
+        btnToggleReady.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
+      }
 
-    async function sendSampleTraffic() {
-      await fetch('/health/live');
-      await fetch('/health/ready');
-      fetchSystemData();
-    }
-
-    async function loadCurriculum() {
-      try {
-        const res = await fetch('/api/curriculum');
-        const data = await res.json();
-        const container = document.getElementById('curriculum-container');
-        container.innerHTML = data.stages.map((stage, idx) => `
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-cyan-500/50 transition">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-cyan-400">PHASE 0${idx + 1}</span>
-              <span class="text-xs px-2.5 py-1 bg-cyan-950/80 text-cyan-300 rounded-full border border-cyan-800 font-mono">${stage.tag}</span>
+      // Render request log
+      const streamContainer = document.getElementById('request-stream');
+      streamContainer.innerHTML = requestHistory.map(r => {
+        const statusColor = r.status >= 500 ? 'text-rose-400' : r.status >= 400 ? 'text-amber-400' : 'text-emerald-400';
+        return `
+          <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800/80">
+            <div class="flex items-center space-x-2">
+              <span class="text-slate-500">${r.timestamp}</span>
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-400 font-bold">${r.method}</span>
+              <span class="text-slate-300">${r.path}</span>
             </div>
-            <h3 class="text-lg font-bold text-white">${stage.title}</h3>
-            <p class="text-sm text-slate-400 leading-relaxed">${stage.description}</p>
-            <div class="border-t border-slate-800 pt-3">
-              <p class="text-xs font-semibold text-slate-300 mb-2">Core Concepts Mastered:</p>
-              <div class="flex flex-wrap gap-1.5">
-                ${stage.keyConcepts.map(c => `
-                  <span class="text-[11px] px-2 py-0.5 bg-slate-950 text-slate-300 border border-slate-800 rounded-md font-mono">${c}</span>
-                `).join('')}
-              </div>
+            <div class="flex items-center space-x-3">
+              <span class="text-slate-400">${r.durationMs}ms</span>
+              <span class="font-bold ${statusColor}">${r.status}</span>
             </div>
           </div>
-        `).join('');
-      } catch (err) {
-        console.error('Failed to load curriculum', err);
-      }
+        `;
+      }).join('');
+    }
+
+    function addLog(method, path, status, extraDelay = 0) {
+      totalRequests++;
+      const duration = (latencyDelayMs || Math.floor(Math.random() * 15 + 10)) + extraDelay;
+      requestHistory.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        method,
+        path,
+        status,
+        durationMs: duration
+      });
+      if (requestHistory.length > 20) requestHistory.pop();
+      updateTelemetryUI();
+    }
+
+    function toggleLiveness() {
+      isHealthy = !isHealthy;
+      chaosErrors++;
+      addLog('GET', '/health/live', isHealthy ? 200 : 500);
+    }
+
+    function toggleReadiness() {
+      isReady = !isReady;
+      chaosErrors++;
+      addLog('GET', '/health/ready', isReady ? 200 : 503);
+    }
+
+    function setLatency(val) {
+      latencyDelayMs = parseInt(val, 10);
+      document.getElementById('latency-label').innerText = `${latencyDelayMs} ms`;
+      addLog('POST', '/api/chaos/latency', 200);
+    }
+
+    function simulate500Error() {
+      chaosErrors++;
+      addLog('GET', '/api/orders/checkout', 500);
+    }
+
+    function simulateCpuSpike() {
+      const memEl = document.getElementById('stat-memory');
+      memEl.innerText = '89%';
+      memEl.classList.add('text-rose-400');
+      addLog('POST', '/api/chaos/cpu-spike', 200, 450);
+      setTimeout(() => {
+        memEl.innerText = '42%';
+        memEl.classList.remove('text-rose-400');
+      }, 3000);
+    }
+
+    function sendPing() {
+      addLog('GET', '/health/ping', 200);
+    }
+
+    function viewPrometheusMetrics() {
+      const uptimeSec = Math.floor((Date.now() - startTime) / 1000);
+      const output = `# HELP devops_http_requests_total Total number of HTTP requests
+# TYPE devops_http_requests_total counter
+devops_http_requests_total{app="devopsforge",version="1.0.0"} ${totalRequests}
+
+# HELP devops_chaos_errors_total Total simulated chaos errors triggered
+# TYPE devops_chaos_errors_total counter
+devops_chaos_errors_total{app="devopsforge"} ${chaosErrors}
+
+# HELP devops_process_uptime_seconds Process uptime in seconds
+# TYPE devops_process_uptime_seconds gauge
+devops_process_uptime_seconds ${uptimeSec}
+
+# HELP devops_kubernetes_liveness_status 1 if alive and healthy, 0 if failing
+# TYPE devops_kubernetes_liveness_status gauge
+devops_kubernetes_liveness_status ${isHealthy ? 1 : 0}
+
+# HELP devops_kubernetes_readiness_status 1 if ready to take traffic, 0 if unready
+# TYPE devops_kubernetes_readiness_status gauge
+devops_kubernetes_readiness_status ${isReady ? 1 : 0}`;
+
+      document.getElementById('prometheus-text').innerText = output;
+      document.getElementById('metrics-modal').classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closePrometheusModal() {
+      document.getElementById('metrics-modal').classList.add('hidden');
+    }
+
+    function loadCurriculum() {
+      const container = document.getElementById('curriculum-container');
+      container.innerHTML = curriculumData.map((stage, idx) => `
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-cyan-500/50 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-cyan-400">PHASE 0${idx + 1}</span>
+            <span class="text-xs px-2.5 py-1 bg-cyan-950/80 text-cyan-300 rounded-full border border-cyan-800 font-mono">${stage.tag}</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">${stage.title}</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">${stage.description}</p>
+          <div class="border-t border-slate-800 pt-3">
+            <p class="text-xs font-semibold text-slate-300 mb-2">Core Concepts Mastered:</p>
+            <div class="flex flex-wrap gap-1.5">
+              ${stage.keyConcepts.map(c => `
+                <span class="text-[11px] px-2 py-0.5 bg-slate-950 text-slate-300 border border-slate-800 rounded-md font-mono">${c}</span>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
     function answerQuiz(qNum, choice, isCorrect) {
@@ -735,9 +824,8 @@
       document.getElementById('quiz-score').innerText = `${currentScore} / 4`;
     }
 
-    // Auto poll every 2 seconds
-    setInterval(fetchSystemData, 2000);
-    fetchSystemData();
+    setInterval(updateTelemetryUI, 1000);
+    updateTelemetryUI();
     loadCurriculum();
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -746,4 +834,3 @@
   </script>
 </body>
 </html>
-
