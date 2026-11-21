@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOpsForge - Interactive DevOps Learning Lab & Mission Control</title>
+  <!-- Tailwind CSS & Lucide Icons via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .badge-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+          <i data-lucide="boxes" class="w-6 h-6 text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            DevOpsForge <span class="text-cyan-400 text-xs px-2 py-0.5 rounded-full border border-cyan-500/30 bg-cyan-950/60 font-mono">v1.0.0</span>
+          </h1>
+          <p class="text-xs text-slate-400">Interactive Cloud-Native Laboratory & Learning System</p>
+        </div>
+      </div>
+
+      <!-- Quick status indicator -->
+      <div class="flex items-center space-x-4 text-xs font-mono">
+        <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+          <span class="w-2.5 h-2.5 rounded-full" id="live-indicator-dot"></span>
+          <span class="text-slate-300">Liveness:</span>
+          <span id="live-indicator-text" class="font-bold">CHECKING...</span>
+        </div>
+        <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+          <span class="w-2.5 h-2.5 rounded-full" id="ready-indicator-dot"></span>
+          <span class="text-slate-300">Readiness:</span>
+          <span id="ready-indicator-text" class="font-bold">CHECKING...</span>
+        </div>
+        <a href="/metrics" target="_blank" class="flex items-center space-x-1.5 bg-cyan-950/80 text-cyan-400 border border-cyan-800 px-3 py-1.5 rounded-lg hover:bg-cyan-900 transition">
+          <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+          <span>/metrics</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="border-b border-slate-800 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 sm:space-x-4 overflow-x-auto py-2">
+      <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="tab-btn active px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 bg-cyan-600/20 text-cyan-400 border border-cyan-500/30">
+        <i data-lucide="gauge" class="w-4 h-4"></i>
+        <span>Live Mission Control</span>
+      </button>
+      <button onclick="switchTab('roadmap')" id="tab-btn-roadmap" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+        <i data-lucide="map" class="w-4 h-4"></i>
+        <span>Step-by-Step Curriculum</span>
+      </button>
+      <button onclick="switchTab('architecture')" id="tab-btn-architecture" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+        <i data-lucide="network" class="w-4 h-4"></i>
+        <span>Architecture & Flow</span>
+      </button>
+      <button onclick="switchTab('commands')" id="tab-btn-commands" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+        <i data-lucide="terminal" class="w-4 h-4"></i>
+        <span>Cheat Sheets & Commands</span>
+      </button>
+      <button onclick="switchTab('quiz')" id="tab-btn-quiz" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+        <i data-lucide="help-circle" class="w-4 h-4"></i>
+        <span>DevOps Skill Quiz</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: LIVE MISSION CONTROL (METRICS & CHAOS SIMULATOR) -->
+    <!-- ========================================================================= -->
+    <div id="view-dashboard" class="space-y-6">
+      
+      <!-- Alert banner explaining the purpose -->
+      <div class="bg-gradient-to-r from-blue-950/60 via-slate-900 to-cyan-950/60 border border-blue-800/40 rounded-2xl p-5 shadow-xl flex items-start space-x-4">
+        <div class="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20 text-cyan-400">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-white">Welcome to your real running DevOps Playground!</h2>
+          <p class="text-sm text-slate-300 mt-1 leading-relaxed">
+            This dashboard is connected to a live production-ready Node.js container application with real Prometheus metrics, Kubernetes probes, and chaos engineering tools. Test how microservices behave when things fail, inspect metrics, and use the project files to master Docker, K8s, CI/CD, and Terraform!
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+            <span>UPTIME</span>
+            <i data-lucide="clock" class="w-4 h-4 text-cyan-400"></i>
+          </div>
+          <div class="text-2xl font-bold font-mono text-white" id="stat-uptime">0s</div>
+          <p class="text-xs text-slate-500 mt-1">Live process running time</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+            <span>MEMORY UTILIZATION</span>
+            <i data-lucide="cpu" class="w-4 h-4 text-purple-400"></i>
+          </div>
+          <div class="text-2xl font-bold font-mono text-white" id="stat-memory">0%</div>
+          <p class="text-xs text-slate-500 mt-1" id="stat-memory-detail">0 MB / 0 MB</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+            <span>ARTIFICIAL LATENCY</span>
+            <i data-lucide="timer" class="w-4 h-4 text-amber-400"></i>
+          </div>
+          <div class="text-2xl font-bold font-mono text-white" id="stat-latency">0 ms</div>
+          <p class="text-xs text-slate-500 mt-1">Simulated network/DB delay</p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+            <span>HOST / POD NAME</span>
+            <i data-lucide="server" class="w-4 h-4 text-emerald-400"></i>
+          </div>
+          <div class="text-sm font-bold font-mono text-emerald-400 truncate" id="stat-hostname">-</div>
+          <p class="text-xs text-slate-500 mt-1 font-mono" id="stat-platform">-</p>
+        </div>
+      </div>
+
+      <!-- Two column section: Chaos Laboratory & Request Inspector -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Chaos & Resilience Simulator -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div>
+              <h3 class="font-bold text-white flex items-center space-x-2">
+                <i data-lucide="flame" class="w-5 h-5 text-rose-500"></i>
+                <span>Chaos & Fault Injection Lab</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Test how SRE monitors & Kubernetes self-healing react to real disasters</p>
+            </div>
+            <span class="text-xs px-2.5 py-1 bg-rose-950/60 border border-rose-800 text-rose-400 rounded-md font-mono">SRE Sim</span>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Chaos Item 1 -->
+            <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold text-white">Fail Kubernetes Liveness Probe</p>
+                <p class="text-xs text-slate-400">Returns HTTP 500 on <code>/health/live</code>. Kubernetes will restart this pod.</p>
+              </div>
+              <button onclick="triggerChaos('toggle_health')" id="btn-toggle-health" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition">
+                Toggle Unhealthy
+              </button>
+            </div>
+
+            <!-- Chaos Item 2 -->
+            <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold text-white">Fail Kubernetes Readiness Probe</p>
+                <p class="text-xs text-slate-400">Returns HTTP 503 on <code>/health/ready</code>. Load balancer stops sending traffic.</p>
+              </div>
+              <button onclick="triggerChaos('toggle_ready')" id="btn-toggle-ready" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition">
+                Toggle Unready
+              </button>
+            </div>
+
+            <!-- Chaos Item 3 -->
+            <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-semibold text-white">Inject Network / Database Latency</p>
+                  <p class="text-xs text-slate-400">Simulate slow downstream API or database bottleneck</p>
+                </div>
+                <span class="text-xs font-mono text-cyan-400" id="latency-label">0 ms</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input type="range" min="0" max="2500" step="250" value="0" id="latency-slider" class="w-full accent-cyan-500 cursor-pointer" onchange="setLatency(this.value)">
+              </div>
+            </div>
+
+            <!-- Chaos Item 4 -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <button onclick="triggerChaos('simulate_error')" class="p-3 bg-red-950/40 border border-red-800/60 hover:bg-red-900/60 text-red-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
+                <i data-lucide="alert-octagon" class="w-4 h-4 text-red-400"></i>
+                <span>Simulate 500 Error</span>
+              </button>
+              <button onclick="triggerChaos('cpu_spike')" class="p-3 bg-purple-950/40 border border-purple-800/60 hover:bg-purple-900/60 text-purple-300 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
+                <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+                <span>Spike CPU Load</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Request Stream & Golden Signals -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+              <div>
+                <h3 class="font-bold text-white flex items-center space-x-2">
+                  <i data-lucide="radio" class="w-5 h-5 text-cyan-400"></i>
+                  <span>Live HTTP Traffic & Golden Signals</span>
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">Real-time HTTP request trace log processed by prom-client</p>
+              </div>
+              <button onclick="sendSampleTraffic()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold rounded-lg flex items-center space-x-1 transition shadow">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span>Send Ping</span>
+              </button>
+            </div>
+
+            <!-- Traffic Log List -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 h-64 overflow-y-auto space-y-2 font-mono text-xs" id="request-stream">
+              <div class="text-slate-500 text-center py-8">Listening for incoming requests...</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-mono">
+            <span>Golden Signals: Latency, Traffic, Errors, Saturation</span>
+            <span class="text-cyan-400">Auto-refreshing (2s)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: STEP-BY-STEP DEVOPS CURRICULUM -->
+    <!-- ========================================================================= -->
+    <div id="view-roadmap" class="hidden space-y-6">
+      <div class="text-center max-w-3xl mx-auto space-y-2">
+        <h2 class="text-2xl font-extrabold text-white">Complete DevOps Engineer Curriculum</h2>
+        <p class="text-slate-400 text-sm">Follow these 7 structured stages from local containers to cloud orchestration and CI/CD automation.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="curriculum-container">
+        <!-- Dynamically filled with rich stage cards -->
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: ARCHITECTURE & REQUEST FLOW -->
+    <!-- ========================================================================= -->
+    <div id="view-architecture" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+            <i data-lucide="layers" class="w-6 h-6 text-cyan-400"></i>
+            <span>Production DevOps Architecture Diagram</span>
+          </h2>
+          <p class="text-slate-400 text-sm mt-1">How requests, containers, orchestration, and monitoring interact in this project.</p>
+        </div>
+
+        <!-- Visual Flow Diagram -->
+        <div class="p-6 bg-slate-950 border border-slate-800 rounded-xl space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center">
+            
+            <!-- Step 1 -->
+            <div class="p-4 bg-slate-900 border border-cyan-800/40 rounded-xl space-y-2">
+              <span class="text-xs font-mono font-bold text-cyan-400">1. CLIENT</span>
+              <div class="w-10 h-10 mx-auto rounded-lg bg-cyan-950 flex items-center justify-center text-cyan-400">
+                <i data-lucide="globe" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs text-slate-300 font-semibold">User Browser</p>
+              <p class="text-[10px] text-slate-500">Port 80/443 (HTTP/S)</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="p-4 bg-slate-900 border border-blue-800/40 rounded-xl space-y-2">
+              <span class="text-xs font-mono font-bold text-blue-400">2. REVERSE PROXY</span>
+              <div class="w-10 h-10 mx-auto rounded-lg bg-blue-950 flex items-center justify-center text-blue-400">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs text-slate-300 font-semibold">Nginx / Ingress</p>
+              <p class="text-[10px] text-slate-500">SSL termination & Load balancing</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="p-4 bg-slate-900 border border-indigo-800/40 rounded-xl space-y-2">
+              <span class="text-xs font-mono font-bold text-indigo-400">3. ORCHESTRATION</span>
+              <div class="w-10 h-10 mx-auto rounded-lg bg-indigo-950 flex items-center justify-center text-indigo-400">
+                <i data-lucide="boxes" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs text-slate-300 font-semibold">Kubernetes / Compose</p>
+              <p class="text-[10px] text-slate-500">Service & Pod Replicas</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="p-4 bg-slate-900 border border-emerald-800/40 rounded-xl space-y-2">
+              <span class="text-xs font-mono font-bold text-emerald-400">4. APPLICATION</span>
+              <div class="w-10 h-10 mx-auto rounded-lg bg-emerald-950 flex items-center justify-center text-emerald-400">
+                <i data-lucide="server" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs text-slate-300 font-semibold">DevOpsForge App</p>
+              <p class="text-[10px] text-slate-500">Port 3000 (Express/Prometheus)</p>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="p-4 bg-slate-900 border border-amber-800/40 rounded-xl space-y-2">
+              <span class="text-xs font-mono font-bold text-amber-400">5. OBSERVABILITY</span>
+              <div class="w-10 h-10 mx-auto rounded-lg bg-amber-950 flex items-center justify-center text-amber-400">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs text-slate-300 font-semibold">Prometheus & Grafana</p>
+              <p class="text-[10px] text-slate-500">Scrapes /metrics every 15s</p>
+            </div>
+
+          </div>
+
+          <!-- Explanation of files -->
+          <div class="border-t border-slate-800 pt-5">
+            <h4 class="text-sm font-bold text-white mb-3">Project File Mapping to Architecture:</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs font-mono">
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-cyan-400 font-bold block mb-1">Dockerfile</span>
+                <span class="text-slate-400">Multi-stage alpine build packaging the app with non-root security.</span>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-blue-400 font-bold block mb-1">docker-compose.yml</span>
+                <span class="text-slate-400">Connects App + Redis + PostgreSQL + Prometheus + Nginx into one network.</span>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-purple-400 font-bold block mb-1">k8s/*.yaml</span>
+                <span class="text-slate-400">Deployment, Service, ConfigMap, Secrets, Ingress, and Autoscaler (HPA).</span>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-emerald-400 font-bold block mb-1">.github/workflows/</span>
+                <span class="text-slate-400">CI/CD pipeline: Test -> Lint -> Docker Build & Push -> Security Scan.</span>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-amber-400 font-bold block mb-1">terraform/*.tf</span>
+                <span class="text-slate-400">Infrastructure as Code: provisions Cloud VPC, Subnets, and Cluster resources.</span>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <span class="text-rose-400 font-bold block mb-1">nginx/nginx.conf</span>
+                <span class="text-slate-400">Production reverse-proxy with rate-limiting, SSL, and gzip compression.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: CHEAT SHEETS & INTERACTIVE COMMANDS -->
+    <!-- ========================================================================= -->
+    <div id="view-commands" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+            <i data-lucide="terminal" class="w-6 h-6 text-cyan-400"></i>
+            <span>Essential DevOps Commands Reference</span>
+          </h2>
+          <p class="text-slate-400 text-sm mt-1">Copy and execute these in your terminal right in this workspace!</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Command Group 1: Docker -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-cyan-400 flex items-center space-x-2">
+                <i data-lucide="box" class="w-4 h-4"></i>
+                <span>Docker Commands</span>
+              </span>
+              <span class="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">Containers</span>
+            </div>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800 group relative">
+                <p class="text-slate-400 text-[11px] mb-1">Build Docker image with tag:</p>
+                <code class="text-white">docker build -t devops-forge:latest .</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Run container in background with port mapping:</p>
+                <code class="text-white">docker run -d -p 3000:3000 --name devops-app devops-forge:latest</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Inspect live logs & resource stats:</p>
+                <code class="text-white">docker logs -f devops-app</code><br>
+                <code class="text-white">docker stats</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Command Group 2: Docker Compose -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-blue-400 flex items-center space-x-2">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+                <span>Docker Compose</span>
+              </span>
+              <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800">Multi-Service</span>
+            </div>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Start all services in detached mode:</p>
+                <code class="text-white">docker-compose up -d --build</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Check status of running stack:</p>
+                <code class="text-white">docker-compose ps</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Stop and clean up containers & networks:</p>
+                <code class="text-white">docker-compose down -v</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Command Group 3: Kubernetes -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-indigo-400 flex items-center space-x-2">
+                <i data-lucide="cpu" class="w-4 h-4"></i>
+                <span>Kubernetes (kubectl)</span>
+              </span>
+              <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800">K8s</span>
+            </div>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Apply all manifests in order:</p>
+                <code class="text-white">kubectl apply -f k8s/</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">View pods, services & HPA:</p>
+                <code class="text-white">kubectl get pods,svc,hpa -n devops-lab</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Debug a pod or view restart reasons:</p>
+                <code class="text-white">kubectl describe pod &lt;pod-name&gt; -n devops-lab</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Command Group 4: Terraform -->
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-purple-400 flex items-center space-x-2">
+                <i data-lucide="cloud" class="w-4 h-4"></i>
+                <span>Terraform (IaC)</span>
+              </span>
+              <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800">IaC</span>
+            </div>
+            <div class="space-y-2 text-xs font-mono">
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Initialize plugins & backend:</p>
+                <code class="text-white">cd terraform &amp;&amp; terraform init</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Preview changes before applying:</p>
+                <code class="text-white">terraform plan</code>
+              </div>
+              <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                <p class="text-slate-400 text-[11px] mb-1">Apply infrastructure:</p>
+                <code class="text-white">terraform apply -auto-approve</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: DEVOPS QUIZ -->
+    <!-- ========================================================================= -->
+    <div id="view-quiz" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 max-w-3xl mx-auto">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400"></i>
+              <span>DevOps Knowledge Assessment</span>
+            </h2>
+            <p class="text-slate-400 text-sm mt-1">Test your mastery of core DevOps, Docker, K8s, and SRE principles</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-400">Score:</span>
+            <span class="text-lg font-bold font-mono text-cyan-400 block" id="quiz-score">0 / 4</span>
+          </div>
+        </div>
+
+        <div class="space-y-6" id="quiz-container">
+          <!-- Question 1 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3" id="q1">
+            <p class="text-sm font-semibold text-white">1. In Kubernetes, what is the difference between a Liveness Probe and a Readiness Probe?</p>
+            <div class="space-y-2 text-xs">
+              <button onclick="answerQuiz(1, 'A', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                A) Liveness monitors CPU usage; Readiness monitors memory leaks.
+              </button>
+              <button onclick="answerQuiz(1, 'B', true)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                B) Liveness restarts unhealthy containers; Readiness stops sending traffic to warming/busy pods.
+              </button>
+              <button onclick="answerQuiz(1, 'C', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                C) Liveness is used for Docker Compose; Readiness is only for AWS.
+              </button>
+            </div>
+            <div class="hidden text-xs font-mono p-3 rounded-lg mt-2" id="q1-explanation"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3" id="q2">
+            <p class="text-sm font-semibold text-white">2. Why are Multi-Stage Docker builds recommended in production?</p>
+            <div class="space-y-2 text-xs">
+              <button onclick="answerQuiz(2, 'A', true)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                A) They keep build compilers/dev tools out of the final image, drastically reducing size and attack surface.
+              </button>
+              <button onclick="answerQuiz(2, 'B', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                B) They allow running multiple operating systems inside one single container at the same time.
+              </button>
+              <button onclick="answerQuiz(2, 'C', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                C) Docker won't start without at least two stages.
+              </button>
+            </div>
+            <div class="hidden text-xs font-mono p-3 rounded-lg mt-2" id="q2-explanation"></div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3" id="q3">
+            <p class="text-sm font-semibold text-white">3. What are the Google SRE "Four Golden Signals" of monitoring?</p>
+            <div class="space-y-2 text-xs">
+              <button onclick="answerQuiz(3, 'A', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                A) Uptime, Downtime, Reboot count, and Ping time.
+              </button>
+              <button onclick="answerQuiz(3, 'B', true)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                B) Latency, Traffic, Errors, and Saturation.
+              </button>
+              <button onclick="answerQuiz(3, 'C', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                C) Pull requests, Code reviews, CI build time, and Test coverage.
+              </button>
+            </div>
+            <div class="hidden text-xs font-mono p-3 rounded-lg mt-2" id="q3-explanation"></div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3" id="q4">
+            <p class="text-sm font-semibold text-white">4. What does "Infrastructure as Code" (IaC) with Terraform solve?</p>
+            <div class="space-y-2 text-xs">
+              <button onclick="answerQuiz(4, 'A', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                A) It automatically writes backend JavaScript code for you.
+              </button>
+              <button onclick="answerQuiz(4, 'B', true)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                B) Eliminates manual click-ops in cloud portals, enables version-controlled, repeatable, and audited cloud environments.
+              </button>
+              <button onclick="answerQuiz(4, 'C', false)" class="w-full text-left p-3 rounded-lg border border-slate-800 hover:bg-slate-900 text-slate-300 transition">
+                C) It makes cloud hosting 100% free forever.
+              </button>
+            </div>
+            <div class="hidden text-xs font-mono p-3 rounded-lg mt-2" id="q4-explanation"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950 py-4 text-center text-xs text-slate-500 font-mono">
+    DevOpsForge • Hands-on Cloud-Native Laboratory • Ready for Docker, Kubernetes, Prometheus & CI/CD
+  </footer>
+
+  <!-- Script logic -->
+  <script>
+    let currentScore = 0;
+    const answered = {};
+
+    function switchTab(tabId) {
+      ['dashboard', 'roadmap', 'architecture', 'commands', 'quiz'].forEach(t => {
+        document.getElementById(`view-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${t}`);
+        btn.classList.remove('bg-cyan-600/20', 'text-cyan-400', 'border-cyan-500/30', 'border');
+        btn.classList.add('text-slate-400');
+      });
+
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      activeBtn.classList.add('bg-cyan-600/20', 'text-cyan-400', 'border-cyan-500/30', 'border');
+      activeBtn.classList.remove('text-slate-400');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function fetchSystemData() {
+      try {
+        const res = await fetch('/api/system');
+        const data = await res.json();
+
+        // Update stats
+        document.getElementById('stat-uptime').innerText = `${data.app.uptimeSeconds}s`;
+        document.getElementById('stat-memory').innerText = `${data.system.memoryPercent}%`;
+        document.getElementById('stat-memory-detail').innerText = `${data.system.memoryUsedMB} MB / ${data.system.memoryTotalMB} MB`;
+        document.getElementById('stat-latency').innerText = `${data.app.latencyDelayMs} ms`;
+        document.getElementById('stat-hostname').innerText = data.system.hostname;
+        document.getElementById('stat-platform').innerText = `${data.system.platform} (${data.system.cpus} CPUs)`;
+
+        // Liveness indicator
+        const liveDot = document.getElementById('live-indicator-dot');
+        const liveText = document.getElementById('live-indicator-text');
+        const btnToggleHealth = document.getElementById('btn-toggle-health');
+
+        if (data.app.isHealthy) {
+          liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+          liveText.className = 'font-bold text-emerald-400';
+          liveText.innerText = 'HEALTHY (200)';
+          btnToggleHealth.innerText = 'Simulate Liveness Failure';
+          btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
+        } else {
+          liveDot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 badge-pulse';
+          liveText.className = 'font-bold text-rose-500';
+          liveText.innerText = 'FAIL (500)';
+          btnToggleHealth.innerText = 'Restore Liveness Health';
+          btnToggleHealth.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
+        }
+
+        // Readiness indicator
+        const readyDot = document.getElementById('ready-indicator-dot');
+        const readyText = document.getElementById('ready-indicator-text');
+        const btnToggleReady = document.getElementById('btn-toggle-ready');
+
+        if (data.app.isReady) {
+          readyDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+          readyText.className = 'font-bold text-emerald-400';
+          readyText.innerText = 'READY (200)';
+          btnToggleReady.innerText = 'Simulate Readiness Failure';
+          btnToggleReady.className = 'px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg shadow transition';
+        } else {
+          readyDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 badge-pulse';
+          readyText.className = 'font-bold text-amber-500';
+          readyText.innerText = 'DRAINING (503)';
+          btnToggleReady.innerText = 'Restore Readiness State';
+          btnToggleReady.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
+        }
+
+        // Latency slider label
+        document.getElementById('latency-label').innerText = `${data.app.latencyDelayMs} ms`;
+
+        // Render request stream
+        const streamContainer = document.getElementById('request-stream');
+        if (data.recentRequests && data.recentRequests.length > 0) {
+          streamContainer.innerHTML = data.recentRequests.map(r => {
+            const statusColor = r.status >= 500 ? 'text-rose-400' : r.status >= 400 ? 'text-amber-400' : 'text-emerald-400';
+            return `
+              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800/80">
+                <div class="flex items-center space-x-2">
+                  <span class="text-slate-500">${r.timestamp}</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-400 font-bold">${r.method}</span>
+                  <span class="text-slate-300">${r.path}</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <span class="text-slate-400">${r.durationMs}ms</span>
+                  <span class="font-bold ${statusColor}">${r.status}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        console.error('Telemetry fetch failed', e);
+      }
+    }
+
+    async function triggerChaos(action, value = 0) {
+      await fetch('/api/chaos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, value })
+      });
+      fetchSystemData();
+    }
+
+    async function setLatency(val) {
+      document.getElementById('latency-label').innerText = `${val} ms`;
+      await triggerChaos('set_latency', val);
+    }
+
+    async function sendSampleTraffic() {
+      await fetch('/health/live');
+      await fetch('/health/ready');
+      fetchSystemData();
+    }
+
+    async function loadCurriculum() {
+      try {
+        const res = await fetch('/api/curriculum');
+        const data = await res.json();
+        const container = document.getElementById('curriculum-container');
+        container.innerHTML = data.stages.map((stage, idx) => `
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-cyan-500/50 transition">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-cyan-400">PHASE 0${idx + 1}</span>
+              <span class="text-xs px-2.5 py-1 bg-cyan-950/80 text-cyan-300 rounded-full border border-cyan-800 font-mono">${stage.tag}</span>
+            </div>
+            <h3 class="text-lg font-bold text-white">${stage.title}</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">${stage.description}</p>
+            <div class="border-t border-slate-800 pt-3">
+              <p class="text-xs font-semibold text-slate-300 mb-2">Core Concepts Mastered:</p>
+              <div class="flex flex-wrap gap-1.5">
+                ${stage.keyConcepts.map(c => `
+                  <span class="text-[11px] px-2 py-0.5 bg-slate-950 text-slate-300 border border-slate-800 rounded-md font-mono">${c}</span>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error('Failed to load curriculum', err);
+      }
+    }
+
+    function answerQuiz(qNum, choice, isCorrect) {
+      if (answered[qNum]) return;
+      answered[qNum] = true;
+
+      const explanationEl = document.getElementById(`q${qNum}-explanation`);
+      explanationEl.classList.remove('hidden');
+
+      if (isCorrect) {
+        currentScore++;
+        explanationEl.className = 'text-xs font-mono p-3 rounded-lg mt-2 bg-emerald-950/60 border border-emerald-800 text-emerald-300';
+        explanationEl.innerHTML = `✅ <strong>Correct!</strong> That is the foundational concept in production systems.`;
+      } else {
+        explanationEl.className = 'text-xs font-mono p-3 rounded-lg mt-2 bg-rose-950/60 border border-rose-800 text-rose-300';
+        explanationEl.innerHTML = `❌ <strong>Not quite!</strong> Option B is the standard industry definition.`;
+      }
+
+      document.getElementById('quiz-score').innerText = `${currentScore} / 4`;
+    }
+
+    // Auto poll every 2 seconds
+    setInterval(fetchSystemData, 2000);
+    fetchSystemData();
+    loadCurriculum();
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
+
