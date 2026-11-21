@@ -141,6 +141,127 @@
         </div>
       </div>
 
+      <!-- ========================================================================= -->
+      <!-- INTERACTIVE CONTAINER ANATOMY & REAL-TIME ANIMATED CHASSIS -->
+      <!-- ========================================================================= -->
+      <div id="container-box" class="bg-slate-900/90 border-2 border-emerald-500/50 rounded-2xl p-6 shadow-xl transition-all duration-500 space-y-5 relative overflow-hidden">
+        
+        <!-- Animated Background Pulse Glow -->
+        <div id="container-glow" class="absolute -inset-1 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-blue-500/10 rounded-2xl blur-lg pointer-events-none transition-all duration-500"></div>
+
+        <!-- Container Header Bar -->
+        <div class="relative flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-2">
+          <div class="flex items-center space-x-3">
+            <div id="container-icon-wrap" class="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-md">
+              <i data-lucide="box" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono font-bold text-slate-400">CONTAINER ANATOMY</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">OCI Image: devopsforge:alpine</span>
+              </div>
+              <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                <span>Pod Replica: <code class="text-cyan-400 font-mono text-xs">devopsforge-78b9d-w2q9p</code></span>
+              </h3>
+            </div>
+          </div>
+
+          <!-- Dynamic Container State Tag -->
+          <div class="flex items-center space-x-2">
+            <span id="container-status-badge" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 flex items-center space-x-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
+              <span id="container-status-text">RUNNING (PID 1)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Container Layers Diagram (Visualizing the OCI Image) -->
+        <div class="relative grid grid-cols-1 md:grid-cols-4 gap-3 text-xs font-mono">
+          
+          <!-- Layer 4: Application Code -->
+          <div id="layer-app" class="p-3 bg-slate-950/80 border border-cyan-800/60 rounded-xl space-y-1 transition-all duration-300">
+            <div class="flex items-center justify-between text-cyan-400 text-[10px] font-bold">
+              <span>LAYER 4 (Top)</span>
+              <span class="text-slate-500">~2 MB</span>
+            </div>
+            <p class="font-bold text-white">App Source Code</p>
+            <p class="text-[11px] text-slate-400 font-sans">HTML5, Client JS, SRE telemetry hooks, and UI components.</p>
+            <div class="pt-1 flex items-center space-x-1 text-[10px] text-cyan-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              <span id="layer-app-status">Serving Traffic OK</span>
+            </div>
+          </div>
+
+          <!-- Layer 3: Runtime -->
+          <div id="layer-runtime" class="p-3 bg-slate-950/80 border border-indigo-800/60 rounded-xl space-y-1 transition-all duration-300">
+            <div class="flex items-center justify-between text-indigo-400 text-[10px] font-bold">
+              <span>LAYER 3</span>
+              <span class="text-slate-500">~45 MB</span>
+            </div>
+            <p class="font-bold text-white">Runtime Engine</p>
+            <p class="text-[11px] text-slate-400 font-sans">Node.js v20 / V8 Engine executing the event loop & async I/O.</p>
+            <div class="pt-1 flex items-center space-x-1 text-[10px] text-indigo-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+              <span>PID 1 • Non-root (node)</span>
+            </div>
+          </div>
+
+          <!-- Layer 2: Asset & CSS -->
+          <div id="layer-assets" class="p-3 bg-slate-950/80 border border-purple-800/60 rounded-xl space-y-1 transition-all duration-300">
+            <div class="flex items-center justify-between text-purple-400 text-[10px] font-bold">
+              <span>LAYER 2</span>
+              <span class="text-slate-500">~8 MB</span>
+            </div>
+            <p class="font-bold text-white">Assets & Tooling</p>
+            <p class="text-[11px] text-slate-400 font-sans">Tailwind CSS engine & Lucide SVG graphics package.</p>
+            <div class="pt-1 flex items-center space-x-1 text-[10px] text-purple-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+              <span>Static Layer Cached</span>
+            </div>
+          </div>
+
+          <!-- Layer 1: Minimal OS Base -->
+          <div id="layer-os" class="p-3 bg-slate-950/80 border border-slate-700 rounded-xl space-y-1 transition-all duration-300">
+            <div class="flex items-center justify-between text-slate-400 text-[10px] font-bold">
+              <span>LAYER 1 (Base)</span>
+              <span class="text-slate-500">~5 MB</span>
+            </div>
+            <p class="font-bold text-white">Alpine Linux 3.19</p>
+            <p class="text-[11px] text-slate-400 font-sans">Ultra-slim rootfs, musl libc, no vulnerable build tools.</p>
+            <div class="pt-1 flex items-center space-x-1 text-[10px] text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>Minimal Attack Surface</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Host Kernel Isolation Footer (Namespaces & Cgroups) -->
+        <div class="relative pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500">Linux Namespaces:</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">net: 0.0.0.0:3000</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">pid: isolated</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">mnt: rootfs</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-500">Cgroups v2 Limits:</span>
+            <span id="cgroup-cpu-badge" class="px-2 py-0.5 rounded bg-slate-800 text-purple-300 border border-slate-700">cpu: 500m</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800 text-purple-300 border border-slate-700">mem: 256Mi</span>
+          </div>
+        </div>
+
+        <!-- Real-Time Dynamic Failure Overlay Banner (Hidden by default, shows on chaos) -->
+        <div id="container-alert-banner" class="hidden relative p-3 rounded-xl border text-xs font-mono flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <i id="container-alert-icon" data-lucide="alert-triangle" class="w-4 h-4"></i>
+            <span id="container-alert-msg" class="font-bold"></span>
+          </div>
+          <span id="container-alert-action" class="text-[10px] px-2 py-0.5 rounded uppercase font-bold"></span>
+        </div>
+
+      </div>
+
       <!-- Two column section: Chaos Laboratory & Request Inspector -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
@@ -553,37 +674,37 @@
         </div>
 
         <!-- Pipeline Stages Flow -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3" id="pipeline-stages-grid">
           
           <!-- Stage 1 -->
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 relative">
+          <div id="pipe-stage-1" class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300">
             <div class="flex items-center justify-between">
               <span class="text-xs font-mono font-bold text-cyan-400">STAGE 1</span>
-              <span class="text-[10px] bg-cyan-950 text-cyan-300 px-1.5 py-0.5 rounded border border-cyan-800">CI</span>
+              <span id="badge-stage-1" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono">PASSED</span>
             </div>
             <p class="text-sm font-bold text-white flex items-center space-x-1.5">
               <span>🧪 Quality Gate</span>
             </p>
-            <p class="text-xs text-slate-400">Runs syntax linting and 6 automated unit & probe tests via <code>npm test</code>.</p>
+            <p class="text-xs text-slate-400">Runs syntax linting & 6 automated unit tests via <code>npm test</code>.</p>
           </div>
 
           <!-- Stage 2 -->
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+          <div id="pipe-stage-2" class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300">
             <div class="flex items-center justify-between">
               <span class="text-xs font-mono font-bold text-purple-400">STAGE 2</span>
-              <span class="text-[10px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800">SecOps</span>
+              <span id="badge-stage-2" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono">PASSED</span>
             </div>
             <p class="text-sm font-bold text-white flex items-center space-x-1.5">
               <span>🛡️ DevSecOps</span>
             </p>
-            <p class="text-xs text-slate-400">Scans for hardcoded credentials, secret keys, or token leaks before building.</p>
+            <p class="text-xs text-slate-400">Scans for hardcoded credentials, tokens, or secret leaks.</p>
           </div>
 
           <!-- Stage 3 -->
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+          <div id="pipe-stage-3" class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300">
             <div class="flex items-center justify-between">
               <span class="text-xs font-mono font-bold text-blue-400">STAGE 3</span>
-              <span class="text-[10px] bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800">Build</span>
+              <span id="badge-stage-3" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono">PASSED</span>
             </div>
             <p class="text-sm font-bold text-white flex items-center space-x-1.5">
               <span>📦 Ingestion</span>
@@ -592,22 +713,22 @@
           </div>
 
           <!-- Stage 4 -->
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+          <div id="pipe-stage-4" class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300">
             <div class="flex items-center justify-between">
               <span class="text-xs font-mono font-bold text-emerald-400">STAGE 4</span>
-              <span class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800">CD</span>
+              <span id="badge-stage-4" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono">PASSED</span>
             </div>
             <p class="text-sm font-bold text-white flex items-center space-x-1.5">
               <span>🚀 Deploy Pages</span>
             </p>
-            <p class="text-xs text-slate-400">Continuous deployment to global GitHub Pages edge network.</p>
+            <p class="text-xs text-slate-400">Continuous deployment to global GitHub Pages edge CDN network.</p>
           </div>
 
           <!-- Stage 5 -->
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+          <div id="pipe-stage-5" class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300">
             <div class="flex items-center justify-between">
               <span class="text-xs font-mono font-bold text-amber-400">STAGE 5</span>
-              <span class="text-[10px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-800">SRE</span>
+              <span id="badge-stage-5" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono">PASSED</span>
             </div>
             <p class="text-sm font-bold text-white flex items-center space-x-1.5">
               <span>🩺 Smoke Test</span>
@@ -615,6 +736,188 @@
             <p class="text-xs text-slate-400">Automated HTTP probe ensures production URL returns HTTP 200 OK.</p>
           </div>
 
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- INTERACTIVE GITHUB DEVOPS FAILURE SIMULATOR -->
+        <!-- ========================================================================= -->
+        <div class="p-5 bg-slate-950 border border-slate-800 rounded-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+                <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-500"></i>
+                <span>Interactive GitHub CI/CD Failure Simulator</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Click any real-world failure mode to see how the pipeline breaks and how senior engineers resolve it!</p>
+            </div>
+            <button onclick="simulatePipelineFailure('reset')" class="px-3 py-1.5 bg-emerald-950 text-emerald-300 border border-emerald-700 hover:bg-emerald-900 text-xs font-semibold rounded-lg transition font-mono flex items-center space-x-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset to Green</span>
+            </button>
+          </div>
+
+          <!-- Simulation Buttons -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 text-xs">
+            <button onclick="simulatePipelineFailure('permission_403')" class="p-2.5 rounded-xl bg-slate-900 border border-rose-900/40 hover:border-rose-500 text-slate-200 text-left transition space-y-1">
+              <span class="text-[10px] font-mono text-rose-400 block font-bold">FAILURE 01</span>
+              <span class="font-semibold block">Missing 403 Permissions</span>
+              <span class="text-[11px] text-slate-500 block">Deploy job denied write access</span>
+            </button>
+
+            <button onclick="simulatePipelineFailure('secret_leak')" class="p-2.5 rounded-xl bg-slate-900 border border-purple-900/40 hover:border-purple-500 text-slate-200 text-left transition space-y-1">
+              <span class="text-[10px] font-mono text-purple-400 block font-bold">FAILURE 02</span>
+              <span class="font-semibold block">Exposed API Token</span>
+              <span class="text-[11px] text-slate-500 block">DevSecOps scanner intercepts key</span>
+            </button>
+
+            <button onclick="simulatePipelineFailure('test_fail')" class="p-2.5 rounded-xl bg-slate-900 border border-cyan-900/40 hover:border-cyan-500 text-slate-200 text-left transition space-y-1">
+              <span class="text-[10px] font-mono text-cyan-400 block font-bold">FAILURE 03</span>
+              <span class="font-semibold block">Broken Unit Tests</span>
+              <span class="text-[11px] text-slate-500 block">Code regression caught in CI</span>
+            </button>
+
+            <button onclick="simulatePipelineFailure('concurrency_race')" class="p-2.5 rounded-xl bg-slate-900 border border-amber-900/40 hover:border-amber-500 text-slate-200 text-left transition space-y-1">
+              <span class="text-[10px] font-mono text-amber-400 block font-bold">FAILURE 04</span>
+              <span class="font-semibold block">Concurrency Race</span>
+              <span class="text-[11px] text-slate-500 block">Parallel deploys overwriting state</span>
+            </button>
+          </div>
+
+          <!-- Interactive Simulated Terminal Runner Console -->
+          <div class="bg-black/80 rounded-xl border border-slate-800 p-4 space-y-2 font-mono text-xs">
+            <div class="flex items-center justify-between text-slate-500 text-[11px] border-b border-slate-800/80 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="ml-2 text-slate-400" id="terminal-job-title">GitHub Actions Runner Output: All Jobs Successful</span>
+              </div>
+              <span id="terminal-job-time">Runner duration: 42s</span>
+            </div>
+            <pre id="terminal-log-output" class="text-emerald-400 leading-relaxed overflow-x-auto whitespace-pre-wrap">
+==> 🧪 1. CI Quality Gate: npm test passed (6/6 tests passed in 134ms)
+==> 🛡️ 2. DevSecOps Scan: 0 credentials or secret tokens found
+==> 📦 3. Build & Ingest: Injected commit metadata into index.html
+==> 🚀 4. CD Deploy: Published artifact to GitHub Pages CDN
+==> 🩺 5. Smoke Test: HTTP GET returned 200 OK
+🎉 DEPLOYMENT SUCCEEDED: Zero failures detected across all quality gates!
+            </pre>
+          </div>
+
+          <!-- Resolution / Fix Guide for Selected Failure -->
+          <div id="failure-explanation-box" class="hidden p-4 rounded-xl border text-xs space-y-2 bg-slate-900/80">
+            <div class="flex items-center space-x-2 font-bold" id="failure-title"></div>
+            <div class="text-slate-300 font-sans leading-relaxed" id="failure-desc"></div>
+            <div class="pt-2">
+              <span class="text-[11px] font-mono font-bold text-emerald-400 block mb-1">🛠️ The Senior DevOps Engineer Fix:</span>
+              <pre class="bg-slate-950 p-3 rounded-lg font-mono text-[11px] text-slate-200 overflow-x-auto" id="failure-code-fix"></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- THE 6 REAL-WORLD PROBLEMS ENGINEERS FACE IN GITHUB DEVOPS -->
+        <!-- ========================================================================= -->
+        <div class="space-y-4 pt-2">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-base font-bold text-white flex items-center space-x-2">
+              <i data-lucide="book-open" class="w-5 h-5 text-cyan-400"></i>
+              <span>Top 6 Problems Engineers Face in GitHub DevOps & How to Solve Them</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">These are the most common production issues experienced in real engineering teams.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            
+            <!-- Problem 1 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-rose-400 font-mono font-bold">PROBLEM 01</span>
+                <span class="text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded border border-rose-800">Permissions</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">403 Resource Not Accessible by Integration</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">By default, GitHub gives workflows read-only access. If your pipeline tries to publish to GitHub Pages or comment on a PR, it immediately crashes with HTTP 403.</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-emerald-400">
+                permissions:<br>
+                &nbsp;&nbsp;pages: write<br>
+                &nbsp;&nbsp;id-token: write
+              </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-rose-400 font-mono font-bold">PROBLEM 02</span>
+                <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800">Security</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">Leaking Secrets in Console Logs or Commits</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">Developers accidentally echo secret tokens in bash scripts, or commit a <code>.env</code> file. Bots on the public internet scrape GitHub commits within 3 seconds to steal keys!</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-purple-300">
+                # Always use GitHub Secrets & secret masking<br>
+                env: API_KEY: ${{ secrets.MY_API_KEY }}<br>
+                # Enforce .gitignore on all .env files
+              </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-400 font-mono font-bold">PROBLEM 03</span>
+                <span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">Performance</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">Slow Builds & Wasted Runner Minutes</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">Running <code>npm install</code> from scratch on every run downloads 500MB over the network, stretching 30-second builds into 8-minute builds and exhausting team quotas.</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-amber-300">
+                - uses: actions/setup-node@v4<br>
+                &nbsp;&nbsp;with:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;cache: 'npm' # Cuts build time by 80%!
+              </div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-blue-400 font-mono font-bold">PROBLEM 04</span>
+                <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800">Concurrency</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">Deployment Race Conditions</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">When two developers merge PRs back-to-back, two deploy workflows run simultaneously, causing race conditions where the older commit can overwrite the newer release.</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-blue-300">
+                concurrency:<br>
+                &nbsp;&nbsp;group: 'pages'<br>
+                &nbsp;&nbsp;cancel-in-progress: false
+              </div>
+            </div>
+
+            <!-- Problem 5 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-cyan-400 font-mono font-bold">PROBLEM 05</span>
+                <span class="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">Reliability</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">Flaky Tests & Network Timeouts</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">Tests that depend on external internet APIs fail randomly when third-party servers rate-limit or experience hiccups, blocking valid pull requests.</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-cyan-300">
+                # Mock all external network calls in unit tests<br>
+                # Use retry logic for network actions
+              </div>
+            </div>
+
+            <!-- Problem 6 -->
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-emerald-400 font-mono font-bold">PROBLEM 06</span>
+                <span class="text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">Infrastructure</span>
+              </div>
+              <h4 class="font-bold text-white text-sm">Runner Disk Space Exhaustion</h4>
+              <p class="text-slate-400 leading-relaxed font-sans">GitHub hosted runners provide ~14GB of free disk space. Building large Docker images or deep node_modules trees causes sudden <code>No space left on device</code> errors.</p>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800 font-mono text-[11px] text-emerald-300">
+                # Use slim base images (e.g., alpine)<br>
+                # Clean up dangling images after build
+              </div>
+            </div>
+
+          </div>
         </div>
 
         <!-- Code preview of deploy.yml -->
@@ -748,23 +1051,92 @@ jobs:
       document.getElementById('stat-uptime').innerText = `${uptimeSec}s`;
       document.getElementById('stat-latency').innerText = `${latencyDelayMs} ms`;
 
+      // Dynamic Container Chassis & Layers Reaction
+      const containerBox = document.getElementById('container-box');
+      const containerIconWrap = document.getElementById('container-icon-wrap');
+      const statusBadge = document.getElementById('container-status-badge');
+      const statusText = document.getElementById('container-status-text');
+      const alertBanner = document.getElementById('container-alert-banner');
+      const alertMsg = document.getElementById('container-alert-msg');
+      const alertAction = document.getElementById('container-alert-action');
+      const layerApp = document.getElementById('layer-app');
+      const layerAppStatus = document.getElementById('layer-app-status');
+
       // Liveness indicator
       const liveDot = document.getElementById('live-indicator-dot');
       const liveText = document.getElementById('live-indicator-text');
       const btnToggleHealth = document.getElementById('btn-toggle-health');
 
-      if (isHealthy) {
-        liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
-        liveText.className = 'font-bold text-emerald-400';
-        liveText.innerText = 'HEALTHY (200)';
-        btnToggleHealth.innerText = 'Simulate Liveness Crash';
-        btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
-      } else {
+      if (!isHealthy) {
+        // Unhealthy Crash State (Kubernetes Liveness Failure)
         liveDot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 badge-pulse';
         liveText.className = 'font-bold text-rose-500';
         liveText.innerText = 'FAIL (500)';
         btnToggleHealth.innerText = 'Restore Liveness Health';
         btnToggleHealth.className = 'px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow transition';
+
+        containerBox.className = 'bg-slate-900/90 border-2 border-rose-500 shadow-2xl shadow-rose-500/20 rounded-2xl p-6 transition-all duration-500 space-y-5 relative overflow-hidden';
+        containerIconWrap.className = 'w-10 h-10 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-center justify-center text-rose-400 shadow-md';
+        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-950 text-rose-300 border border-rose-700 flex items-center space-x-1.5';
+        statusText.innerText = 'CRASHED (500) • RESTARTING';
+        
+        layerApp.className = 'p-3 bg-rose-950/40 border border-rose-700 rounded-xl space-y-1 transition-all duration-300';
+        layerAppStatus.innerText = 'Deadlock / 500 Failure';
+        layerAppStatus.className = 'text-[10px] text-rose-400 font-bold';
+
+        alertBanner.classList.remove('hidden');
+        alertBanner.className = 'relative p-3 rounded-xl border bg-rose-950/70 border-rose-800 text-rose-200 text-xs font-mono flex items-center justify-between';
+        alertMsg.innerText = '🚨 Kubernetes Liveness Probe Failed (3/3): Kubelet killing container and spawning replacement pod!';
+        alertAction.innerText = 'Auto-Healing';
+        alertAction.className = 'text-[10px] px-2 py-0.5 rounded uppercase font-bold bg-rose-900 text-rose-200';
+      } else if (!isReady) {
+        // Unready Drain State (Kubernetes Readiness Failure)
+        liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+        liveText.className = 'font-bold text-emerald-400';
+        liveText.innerText = 'HEALTHY (200)';
+        btnToggleHealth.innerText = 'Simulate Liveness Crash';
+        btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
+
+        containerBox.className = 'bg-slate-900/90 border-2 border-amber-500 shadow-2xl shadow-amber-500/20 rounded-2xl p-6 transition-all duration-500 space-y-5 relative overflow-hidden';
+        containerIconWrap.className = 'w-10 h-10 rounded-xl bg-amber-950/80 border border-amber-500/50 flex items-center justify-center text-amber-400 shadow-md';
+        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-950 text-amber-300 border border-amber-700 flex items-center space-x-1.5';
+        statusText.innerText = 'UNREADY (503) • DRAINING';
+
+        layerApp.className = 'p-3 bg-amber-950/40 border border-amber-700 rounded-xl space-y-1 transition-all duration-300';
+        layerAppStatus.innerText = 'Traffic Drained (503)';
+        layerAppStatus.className = 'text-[10px] text-amber-400 font-bold';
+
+        alertBanner.classList.remove('hidden');
+        alertBanner.className = 'relative p-3 rounded-xl border bg-amber-950/70 border-amber-800 text-amber-200 text-xs font-mono flex items-center justify-between';
+        alertMsg.innerText = '⚠️ Readiness Probe Failed: Ingress/Service routing traffic AWAY from this pod until database recovers!';
+        alertAction.innerText = 'Traffic Drained';
+        alertAction.className = 'text-[10px] px-2 py-0.5 rounded uppercase font-bold bg-amber-900 text-amber-200';
+      } else {
+        // Normal Healthy State
+        liveDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 badge-pulse';
+        liveText.className = 'font-bold text-emerald-400';
+        liveText.innerText = 'HEALTHY (200)';
+        btnToggleHealth.innerText = 'Simulate Liveness Crash';
+        btnToggleHealth.className = 'px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg shadow transition';
+
+        containerBox.className = 'bg-slate-900/90 border-2 border-emerald-500/50 shadow-xl rounded-2xl p-6 transition-all duration-500 space-y-5 relative overflow-hidden';
+        containerIconWrap.className = 'w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-md';
+        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700 flex items-center space-x-1.5';
+        statusText.innerText = 'RUNNING (PID 1)';
+
+        layerApp.className = 'p-3 bg-slate-950/80 border border-cyan-800/60 rounded-xl space-y-1 transition-all duration-300';
+        layerAppStatus.innerText = 'Serving Traffic OK';
+        layerAppStatus.className = 'text-[10px] text-cyan-400';
+
+        if (latencyDelayMs > 0) {
+          alertBanner.classList.remove('hidden');
+          alertBanner.className = 'relative p-3 rounded-xl border bg-cyan-950/60 border-cyan-800 text-cyan-200 text-xs font-mono flex items-center justify-between';
+          alertMsg.innerText = `⏱️ Network Deliberate Latency: Injected ${latencyDelayMs}ms artificial delay on all endpoints.`;
+          alertAction.innerText = 'Latency Injected';
+          alertAction.className = 'text-[10px] px-2 py-0.5 rounded uppercase font-bold bg-cyan-900 text-cyan-200';
+        } else {
+          alertBanner.classList.add('hidden');
+        }
       }
 
       // Readiness indicator
@@ -928,6 +1300,170 @@ devops_kubernetes_readiness_status ${isReady ? 1 : 0}`;
       }
 
       document.getElementById('quiz-score').innerText = `${currentScore} / 4`;
+    }
+
+    function simulatePipelineFailure(type) {
+      const stage1 = document.getElementById('pipe-stage-1');
+      const badge1 = document.getElementById('badge-stage-1');
+      const stage2 = document.getElementById('pipe-stage-2');
+      const badge2 = document.getElementById('badge-stage-2');
+      const stage3 = document.getElementById('pipe-stage-3');
+      const badge3 = document.getElementById('badge-stage-3');
+      const stage4 = document.getElementById('pipe-stage-4');
+      const badge4 = document.getElementById('badge-stage-4');
+      const stage5 = document.getElementById('pipe-stage-5');
+      const badge5 = document.getElementById('badge-stage-5');
+
+      const termTitle = document.getElementById('terminal-job-title');
+      const termTime = document.getElementById('terminal-job-time');
+      const termOutput = document.getElementById('terminal-log-output');
+      const expBox = document.getElementById('failure-explanation-box');
+      const expTitle = document.getElementById('failure-title');
+      const expDesc = document.getElementById('failure-desc');
+      const expFix = document.getElementById('failure-code-fix');
+
+      function resetAllGreen() {
+        [stage1, stage2, stage3, stage4, stage5].forEach((s, idx) => {
+          if (!s) return;
+          s.className = 'p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 transition-all duration-300';
+          const b = [badge1, badge2, badge3, badge4, badge5][idx];
+          if (b) {
+            b.className = 'text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 font-mono';
+            b.innerText = 'PASSED';
+          }
+        });
+      }
+
+      resetAllGreen();
+
+      if (type === 'reset') {
+        termTitle.innerText = 'GitHub Actions Runner: All Jobs Successful';
+        termTime.innerText = 'Duration: 42s';
+        termOutput.className = 'text-emerald-400 leading-relaxed overflow-x-auto whitespace-pre-wrap';
+        termOutput.innerText = `==> 🧪 1. CI Quality Gate: npm test passed (6/6 tests passed in 134ms)
+==> 🛡️ 2. DevSecOps Scan: 0 credentials or secret tokens found
+==> 📦 3. Build & Ingest: Injected commit metadata into index.html
+==> 🚀 4. CD Deploy: Published artifact to GitHub Pages CDN
+==> 🩺 5. Smoke Test: HTTP GET returned 200 OK
+🎉 DEPLOYMENT SUCCEEDED: Zero failures detected across all quality gates!`;
+        expBox.classList.add('hidden');
+        return;
+      }
+
+      expBox.classList.remove('hidden');
+
+      if (type === 'permission_403') {
+        stage4.className = 'p-4 bg-rose-950/40 border-2 border-rose-500 rounded-xl space-y-2 transition-all duration-300 shadow-lg shadow-rose-500/20';
+        badge4.className = 'text-[10px] bg-rose-950 text-rose-300 px-1.5 py-0.5 rounded border border-rose-700 font-mono font-bold';
+        badge4.innerText = 'FAILED (403)';
+
+        stage5.className = 'p-4 bg-slate-950/40 border border-slate-900 rounded-xl space-y-2 opacity-50';
+        badge5.className = 'text-[10px] bg-slate-900 text-slate-500 px-1.5 py-0.5 rounded font-mono';
+        badge5.innerText = 'SKIPPED';
+
+        termTitle.innerText = 'GitHub Actions Runner: Job Failed at Stage 4 (CD Deploy)';
+        termTime.innerText = 'Exited with code 1';
+        termOutput.className = 'text-rose-400 leading-relaxed overflow-x-auto whitespace-pre-wrap';
+        termOutput.innerText = `==> 🧪 1. CI Quality Gate: PASSED
+==> 🛡️ 2. DevSecOps Scan: PASSED
+==> 📦 3. Build & Ingest: PASSED
+==> 🚀 4. CD Deploy (actions/deploy-pages@v4):
+Requesting GitHub Pages deployment token...
+Error: HttpError: Resource not accessible by integration (Status: 403 Forbidden)
+    at /home/runner/work/_actions/actions/deploy-pages/v4/index.js:142
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+##[error] Deployment failed with status code 403. GITHUB_TOKEN lacks required permissions!
+==> 🩺 5. Smoke Test: SKIPPED due to prior failure`;
+
+        expTitle.innerHTML = `<span class="text-rose-400">🚨 Failure Diagnosis:</span> Missing GITHUB_TOKEN Permissions (HTTP 403)`;
+        expDesc.innerText = `GitHub workflows are read-only by default for security. The deployment action needs explicit write permissions to GitHub Pages and the OpenID Connect (OIDC) identity token.`;
+        expFix.innerText = `# Add this top-level block inside .github/workflows/deploy.yml:
+permissions:
+  contents: read
+  pages: write    # Grants permission to publish to GitHub Pages CDN
+  id-token: write # Required for secure OIDC token exchange`;
+      } else if (type === 'secret_leak') {
+        stage2.className = 'p-4 bg-purple-950/40 border-2 border-purple-500 rounded-xl space-y-2 transition-all duration-300 shadow-lg shadow-purple-500/20';
+        badge2.className = 'text-[10px] bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-700 font-mono font-bold';
+        badge2.innerText = 'SECURITY ALERT';
+
+        [stage3, stage4, stage5].forEach((s, i) => {
+          s.className = 'p-4 bg-slate-950/40 border border-slate-900 rounded-xl space-y-2 opacity-50';
+          [badge3, badge4, badge5][i].className = 'text-[10px] bg-slate-900 text-slate-500 px-1.5 py-0.5 rounded font-mono';
+          [badge3, badge4, badge5][i].innerText = 'CANCELLED';
+        });
+
+        termTitle.innerText = 'GitHub Actions Runner: Job Failed at Stage 2 (DevSecOps)';
+        termTime.innerText = 'Exited with code 1';
+        termOutput.className = 'text-purple-400 leading-relaxed overflow-x-auto whitespace-pre-wrap';
+        termOutput.innerText = `==> 🧪 1. CI Quality Gate: PASSED
+==> 🛡️ 2. DevSecOps Secret Scanning Gate:
+Scanning changed files for hardcoded API keys, tokens, or credentials...
+🚨 SECURITY VULNERABILITY DETECTED in commit:
+  File: config/client.js: line 14: const TOKEN = "ghp_EXAMPLE_LEAKED_KEY..."
+##[error] Build blocked! Do NOT commit secret keys into Git repositories!
+==> Stages 3, 4, 5 CANCELLED to prevent credential leak into production.`;
+
+        expTitle.innerHTML = `<span class="text-purple-400">🛡️ Failure Diagnosis:</span> Hardcoded Secret / Credential Leak in Git`;
+        expDesc.innerText = `A secret API token or cloud key was checked into the repository. Web crawlers scan public GitHub commits in seconds. The DevSecOps gate stopped the deployment before the secret reached the production CDN!`;
+        expFix.innerText = `# 1. Revoke the leaked key immediately in your provider dashboard!
+# 2. Store secrets in GitHub: Repo Settings -> Secrets and variables -> Actions
+# 3. Access in workflow safely via environment variables:
+env:
+  API_SECRET: \${{ secrets.MY_PROD_API_KEY }}`;
+      } else if (type === 'test_fail') {
+        stage1.className = 'p-4 bg-rose-950/40 border-2 border-rose-500 rounded-xl space-y-2 transition-all duration-300 shadow-lg shadow-rose-500/20';
+        badge1.className = 'text-[10px] bg-rose-950 text-rose-300 px-1.5 py-0.5 rounded border border-rose-700 font-mono font-bold';
+        badge1.innerText = 'TEST FAILED';
+
+        [stage2, stage3, stage4, stage5].forEach((s, i) => {
+          s.className = 'p-4 bg-slate-950/40 border border-slate-900 rounded-xl space-y-2 opacity-50';
+          [badge2, badge3, badge4, badge5][i].className = 'text-[10px] bg-slate-900 text-slate-500 px-1.5 py-0.5 rounded font-mono';
+          [badge2, badge3, badge4, badge5][i].innerText = 'BLOCKED';
+        });
+
+        termTitle.innerText = 'GitHub Actions Runner: Job Failed at Stage 1 (Quality Gate)';
+        termTime.innerText = 'Exited with code 1';
+        termOutput.className = 'text-rose-400 leading-relaxed overflow-x-auto whitespace-pre-wrap';
+        termOutput.innerText = `==> 🧪 1. CI Quality Gate (npm test):
+> node --test tests/validate.test.js
+✔ 1. [Quality Gate] index.html exists
+✖ 2. [Quality Gate] Essential UI telemetry elements exist
+   AssertionError: Uptime stat must exist in DOM
+   at TestContext.<anonymous> (tests/validate.test.js:15:10)
+ℹ tests 6 | pass 5 | fail 1
+##[error] Process completed with exit code 1. Deployment aborted!`;
+
+        expTitle.innerHTML = `<span class="text-rose-400">🧪 Failure Diagnosis:</span> Broken Quality Gate (Automated Tests Failed)`;
+        expDesc.innerText = `A commit removed or broke a critical DOM element required for the SRE dashboard. The CI quality gate halted the pipeline before broken code reached real users.`;
+        expFix.innerText = `# Run tests locally before pushing to prevent CI failures:
+npm test
+
+# In GitHub Actions, ensure 'needs: quality-gate' is set on the deploy job
+# so that broken builds never get deployed!`;
+      } else if (type === 'concurrency_race') {
+        stage4.className = 'p-4 bg-amber-950/40 border-2 border-amber-500 rounded-xl space-y-2 transition-all duration-300 shadow-lg shadow-amber-500/20';
+        badge4.className = 'text-[10px] bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-700 font-mono font-bold';
+        badge4.innerText = 'CANCELLED';
+
+        termTitle.innerText = 'GitHub Actions Runner: Job Cancelled by Newer Release';
+        termTime.innerText = 'Cancelled in progress';
+        termOutput.className = 'text-amber-400 leading-relaxed overflow-x-auto whitespace-pre-wrap';
+        termOutput.innerText = `==> 🧪 1. CI Quality Gate: PASSED
+==> 🛡️ 2. DevSecOps Scan: PASSED
+==> 📦 3. Build & Ingest: PASSED
+==> 🚀 4. CD Deploy:
+⚠️ Concurrency group 'pages' already in progress by newer commit.
+Cancelling this stale deployment to prevent out-of-order production release!
+##[warning] Deployment job cancelled safely. Newer release takes precedence.`;
+
+        expTitle.innerHTML = `<span class="text-amber-400">⏱️ Failure Diagnosis:</span> Concurrency Race Condition`;
+        expDesc.innerText = `Two pull requests were merged simultaneously. Without concurrency controls, an older release could finish after a newer release, rolling back your website accidentally!`;
+        expFix.innerText = `# Add this to the top of your workflow to enforce sequential deployments:
+concurrency:
+  group: "pages"
+  cancel-in-progress: false # Or true to immediately discard stale runs`;
+      }
     }
 
     setInterval(updateTelemetryUI, 1000);

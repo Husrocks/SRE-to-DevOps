@@ -46,3 +46,4 @@ test('6. [Accessibility & CDN Gate] All external script links use HTTPS', () => 
   const cdnLinks = htmlContent.match(/src="http:\/\/[^"]+"/g);
   assert.strictEqual(cdnLinks, null, 'All script CDNs must use secure HTTPS, no plaintext HTTP allowed');
 });
+
